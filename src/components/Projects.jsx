@@ -10,7 +10,7 @@ const projects = [
         description: 'A dedicated safety application designed to help women in distress. Features include real-time location sharing, emergency alerts, and quick access to helplines.',
         tech: ['React Native', 'Geolocation', 'Emergency API'],
         image: sahaya,
-        link: 'https://expo.dev/artifacts/eas/skvxeLDnrLZTLX84jWSTax.apk'
+        link: ''
     },
     {
         title: 'Gym Management App',
@@ -31,7 +31,7 @@ const projects = [
         description: 'A dedicated TODo-list application designed to help list your tasks.',
         tech: ['React Native', 'Node.js', 'Mongodb'],
         image: '',
-        link: 'https://expo.dev/artifacts/eas/pJ5sdF44qNbrn2Aw74eZx4.apk'
+        link: ''
     },
      {
         title: 'ExpensesTracker App',
@@ -108,9 +108,9 @@ const Projects = () => {
                                     </div>
                                 </div>
                                 <div className="mt-6">
-                                    <a href={project.link} className="text-base font-semibold text-primary hover:text-sky-400">
-                                        View Project &rarr;
-                                    </a>
+                                    <p className="text-base font-semibold text-yellow-400">
+                                        Note: The APK file is too large to download directly. Please contact for developer.
+                                    </p>
                                 </div>
                             </div>
                         </motion.div>
