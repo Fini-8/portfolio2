@@ -1,63 +1,65 @@
 import React from 'react';
 import { motion } from 'framer-motion';
-import SectionWrapper from './SectionWrapper';
 
 const skills = [
-    { name: 'React Native', level: 'Intermediate', icon: '📱' },
-    { name: 'Ionic', level: 'Intermediate', icon: '⚡' },
-    { name: 'Angular', level: 'Intermediate', icon: '🅰️' },
-    { name: 'React.js', level: 'Intermediate', icon: '⚛️' },
-    { name: 'JavaScript (ES6+)', level: 'Intermediate', icon: '💛' },
-    { name: 'Node.js', level: 'Intermediate', icon: '🟢' },
-    { name: 'MongoDB', level: 'Intermediate', icon: '🍃' },
-    { name: 'Git / GitHub', level: 'Intermediate', icon: '🐙' },
+    { name: 'React Native', bg: 'bg-blue-50', text: 'text-blue-700', border: 'border-blue-200' },
+    { name: 'Ionic', bg: 'bg-purple-50', text: 'text-purple-700', border: 'border-purple-200' },
+    { name: 'Angular', bg: 'bg-red-50', text: 'text-red-700', border: 'border-red-200' },
+    { name: 'React.js', bg: 'bg-cyan-50', text: 'text-cyan-700', border: 'border-cyan-200' },
+    { name: 'JavaScript', bg: 'bg-yellow-50', text: 'text-yellow-700', border: 'border-yellow-200' },
+    { name: 'Node.js', bg: 'bg-green-50', text: 'text-green-700', border: 'border-green-200' },
+    { name: 'MongoDB', bg: 'bg-emerald-50', text: 'text-emerald-700', border: 'border-emerald-200' },
+    { name: 'Git / GitHub', bg: 'bg-gray-50', text: 'text-gray-700', border: 'border-gray-200' },
 ];
 
 const Skills = () => {
     return (
-        <SectionWrapper id="skills" className="py-20 bg-dark">
-            <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-                <div className="text-center">
-                    <h2 className="text-3xl font-extrabold text-white sm:text-4xl">
-                        Technical Skills
+        <section id="skills" className="py-20 relative">
+            <div className="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8">
+                <motion.div
+                    initial={{ opacity: 0, y: 30 }}
+                    whileInView={{ opacity: 1, y: 0 }}
+                    viewport={{ once: true }}
+                    transition={{ duration: 0.6 }}
+                    className="text-center mb-16"
+                >
+                    <h2 className="text-3xl md:text-4xl font-bold mb-4 text-gray-900">
+                        <span className="text-black">Technical Skills</span>
                     </h2>
-                    <p className="mt-4 max-w-2xl text-xl text-gray-400 mx-auto">
-                        My tech stack and tools I use to build amazing apps.
+                    <p className="max-w-2xl mx-auto text-base md:text-lg text-gray-600">
+                        Technologies and tools I use to build amazing applications
                     </p>
-                </div>
+                </motion.div>
 
                 <motion.div
-                    className="mt-16 grid grid-cols-2 gap-8 md:grid-cols-3 lg:grid-cols-4"
+                    className="flex flex-wrap justify-center gap-3"
+                    initial="hidden"
+                    whileInView="show"
+                    viewport={{ once: true, margin: "-50px" }}
                     variants={{
                         hidden: { opacity: 0 },
                         show: {
                             opacity: 1,
-                            transition: {
-                                staggerChildren: 0.1
-                            }
+                            transition: { staggerChildren: 0.05 }
                         }
                     }}
-                    initial="hidden"
-                    whileInView="show"
-                    viewport={{ once: false, amount: { base: 0.1, md: 0.25 } }}
                 >
-                    {skills.map((skill) => (
+                    {skills.map((skill, index) => (
                         <motion.div
                             key={skill.name}
-                            className="bg-slate-800 rounded-lg p-6 text-center hover:bg-slate-700 transition-colors shadow-lg border border-slate-700"
                             variants={{
-                                hidden: { opacity: 0, y: { base: 10, md: 20 } },
-                                show: { opacity: 1, y: 0, transition: { duration: 0.15 } }
+                                hidden: { opacity: 0, scale: 0.8, y: 20 },
+                                show: { opacity: 1, scale: 1, y: 0 }
                             }}
+                            whileHover={{ scale: 1.05, y: -2 }}
+                            className={`px-4 py-2 rounded-full ${skill.bg} ${skill.text} ${skill.border} border-2 font-medium text-xs md:text-sm transition-all duration-300 cursor-default shadow-sm hover:shadow-md`}
                         >
-                            <div className="text-4xl mb-4">{skill.icon}</div>
-                            <h3 className="text-lg font-medium text-white">{skill.name}</h3>
-                            <p className="mt-2 text-sm text-primary">{skill.level}</p>
+                            {skill.name}
                         </motion.div>
                     ))}
                 </motion.div>
             </div>
-        </SectionWrapper>
+        </section>
     );
 };
 
