@@ -108,9 +108,15 @@ const Projects = () => {
                                     </div>
                                 </div>
                                 <div className="mt-6">
-                                    <p className="text-base font-semibold text-yellow-400">
-                                        Note: The APK file is too large to download directly. Please contact for developer.
-                                    </p>
+                                    {(project.title === 'Gym Management App' || project.title === 'CreatorFlow') ? (
+                                        <a href={project.link} className="text-base font-semibold text-primary hover:text-sky-400">
+                                            View Project &rarr;
+                                        </a>
+                                    ) : (
+                                        <p className="text-base font-semibold text-yellow-400">
+                                            Note: The APK file is too large to download directly. Please contact for developer.
+                                        </p>
+                                    )}
                                 </div>
                             </div>
                         </motion.div>
