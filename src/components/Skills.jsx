@@ -2,62 +2,78 @@ import React from 'react';
 import { motion } from 'framer-motion';
 
 const skills = [
-    { name: 'React Native', bg: 'bg-blue-50', text: 'text-blue-700', border: 'border-blue-200' },
-    { name: 'Ionic', bg: 'bg-purple-50', text: 'text-purple-700', border: 'border-purple-200' },
-    { name: 'Angular', bg: 'bg-red-50', text: 'text-red-700', border: 'border-red-200' },
-    { name: 'React.js', bg: 'bg-cyan-50', text: 'text-cyan-700', border: 'border-cyan-200' },
-    { name: 'JavaScript', bg: 'bg-yellow-50', text: 'text-yellow-700', border: 'border-yellow-200' },
-    { name: 'Node.js', bg: 'bg-green-50', text: 'text-green-700', border: 'border-green-200' },
-    { name: 'MongoDB', bg: 'bg-emerald-50', text: 'text-emerald-700', border: 'border-emerald-200' },
-    { name: 'Git / GitHub', bg: 'bg-gray-50', text: 'text-gray-700', border: 'border-gray-200' },
+    'React Native',
+    'Ionic',
+    'Angular',
+    'React.js',
+    'JavaScript',
+    'TypeScript',
+    'Node.js',
+    'MongoDB',
+    'Git / GitHub',
+    'Supabase',
+    'Nativewind CSS',
+    'Tailwind CSS',
+    'MySql'
 ];
 
 const Skills = () => {
     return (
-        <section id="skills" className="py-20 relative">
-            <div className="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8">
-                <motion.div
-                    initial={{ opacity: 0, y: 30 }}
-                    whileInView={{ opacity: 1, y: 0 }}
-                    viewport={{ once: true }}
-                    transition={{ duration: 0.6 }}
-                    className="text-center mb-16"
-                >
-                    <h2 className="text-3xl md:text-4xl font-bold mb-4 text-gray-900">
-                        <span className="text-black">Technical Skills</span>
-                    </h2>
-                    <p className="max-w-2xl mx-auto text-base md:text-lg text-gray-600">
-                        Technologies and tools I use to build amazing applications
-                    </p>
-                </motion.div>
+        <section id="skills" className="py-24 bg-white">
+            <div className="w-full px-6 sm:px-12 lg:px-16">
 
-                <motion.div
-                    className="flex flex-wrap justify-center gap-3"
-                    initial="hidden"
-                    whileInView="show"
-                    viewport={{ once: true, margin: "-50px" }}
-                    variants={{
-                        hidden: { opacity: 0 },
-                        show: {
-                            opacity: 1,
-                            transition: { staggerChildren: 0.05 }
-                        }
-                    }}
-                >
-                    {skills.map((skill, index) => (
-                        <motion.div
-                            key={skill.name}
-                            variants={{
-                                hidden: { opacity: 0, scale: 0.8, y: 20 },
-                                show: { opacity: 1, scale: 1, y: 0 }
-                            }}
-                            whileHover={{ scale: 1.05, y: -2 }}
-                            className={`px-4 py-2 rounded-full ${skill.bg} ${skill.text} ${skill.border} border-2 font-medium text-xs md:text-sm transition-all duration-300 cursor-default shadow-sm hover:shadow-md`}
-                        >
-                            {skill.name}
-                        </motion.div>
-                    ))}
-                </motion.div>
+                {/* Header Section */}
+                <div className="max-w-7xl mx-auto mb-20 text-center">
+                    <motion.span
+                        initial={{ opacity: 0 }}
+                        whileInView={{ opacity: 1 }}
+                        className="text-sm font-bold tracking-widest text-gray-400 uppercase mb-4 block"
+                    >
+                        Foundation
+                    </motion.span>
+                    <h2 className="text-2xl md:text-3xl font-bold text-gray-900 tracking-tight">
+                        Technical Stack
+                    </h2>
+                    <div className="w-16 h-1 bg-black mx-auto mt-6 rounded-full" />
+                </div>
+
+                {/* Skills Container */}
+                <div className="max-w-5xl mx-auto">
+                    <motion.div
+                        className="flex flex-wrap justify-center gap-4"
+                        initial="hidden"
+                        whileInView="show"
+                        viewport={{ once: true }}
+                        variants={{
+                            hidden: { opacity: 0 },
+                            show: {
+                                opacity: 1,
+                                transition: { staggerChildren: 0.05 }
+                            }
+                        }}
+                    >
+                        {skills.map((skill) => (
+                            <motion.div
+                                key={skill}
+                                variants={{
+                                    hidden: { opacity: 0, scale: 0.9, y: 10 },
+                                    show: { opacity: 1, scale: 1, y: 0 }
+                                }}
+                                whileHover={{
+                                    scale: 1.05,
+                                    backgroundColor: '#000000',
+                                    color: '#ffffff',
+                                    borderColor: '#000000'
+                                }}
+                                transition={{ type: 'spring', stiffness: 300, damping: 20 }}
+                                className="px-6 py-3 rounded-[1.2rem] bg-[#FAFAFA] text-gray-900 border-2 border-gray-50 font-bold text-xs transition-all duration-300 cursor-default shadow-sm hover:shadow-[0_20px_40px_-10px_rgba(0,0,0,0.1)] flex items-center gap-2 group"
+                            >
+                                <span className="w-1 h-1 rounded-full bg-black group-hover:bg-white transition-colors" />
+                                {skill}
+                            </motion.div>
+                        ))}
+                    </motion.div>
+                </div>
             </div>
         </section>
     );

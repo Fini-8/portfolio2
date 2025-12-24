@@ -6,103 +6,132 @@ const LoadingScreen = () => {
     const [progress, setProgress] = useState(0);
 
     useEffect(() => {
-        // Simulate loading progress
+        // Precise progress tracking
         const interval = setInterval(() => {
             setProgress((prev) => {
                 if (prev >= 100) {
                     clearInterval(interval);
                     return 100;
                 }
-                return prev + 2;
+                const increment = Math.random() * 15;
+                return Math.min(prev + increment, 100);
             });
-        }, 30);
+        }, 150);
 
-        // Hide loading screen after minimum time and when page is fully loaded
         const hideLoading = () => {
             setTimeout(() => {
                 setLoading(false);
-            }, 500); // Wait for progress to complete
+            }, 800);
         };
 
-        // Check if page is already loaded
         if (document.readyState === 'complete') {
-            setTimeout(hideLoading, 1200);
-        } else {
-            // Wait for page to load
-            window.addEventListener('load', () => {
-                setTimeout(hideLoading, 1200);
-            });
-            
-            // Fallback timer
             setTimeout(hideLoading, 2000);
+        } else {
+            window.addEventListener('load', () => {
+                setTimeout(hideLoading, 2000);
+            });
+            setTimeout(hideLoading, 4000);
         }
 
-        return () => {
-            clearInterval(interval);
-        };
+        return () => clearInterval(interval);
     }, []);
 
     return (
-        <AnimatePresence>
+        <AnimatePresence mode="wait">
             {loading && (
                 <motion.div
+                    key="loader"
                     initial={{ opacity: 1 }}
-                    exit={{ opacity: 0 }}
-                    transition={{ duration: 0.5, ease: 'easeInOut' }}
-                    className="fixed inset-0 z-[9999] bg-gradient-to-br from-gray-50 via-gray-50 to-gray-100 flex items-center justify-center"
+                    exit={{
+                        y: '-100%',
+                        transition: { duration: 0.8, ease: [0.76, 0, 0.24, 1] }
+                    }}
+                    className="fixed inset-0 z-[9999] bg-black flex flex-col items-center justify-center p-6 overflow-hidden"
                 >
-                    <div className="text-center">
-                        {/* Logo/Name */}
-                        <motion.div
-                            initial={{ opacity: 0, y: 20 }}
-                            animate={{ opacity: 1, y: 0 }}
-                            transition={{ duration: 0.6, delay: 0.2 }}
-                            className="mb-8"
-                        >
-                            <h1 className="text-3xl md:text-4xl font-bold">
-                                <span className="text-black">Syed Firas</span>
-                            </h1>
-                            <p className="text-gray-600 mt-2 text-xs md:text-sm">
-                                React Native Developer
-                            </p>
-                        </motion.div>
+                    {/* Background Texture */}
+                    <div className="absolute inset-0 opacity-20 pointer-events-none">
+                        <div className="absolute top-0 left-0 w-full h-full bg-[radial-gradient(circle_at_center,rgba(255,255,255,0.05)_0%,transparent_100%)]" />
+                    </div>
 
-                        {/* Loading spinner */}
-                        <motion.div
-                            initial={{ opacity: 0, scale: 0.8 }}
-                            animate={{ opacity: 1, scale: 1 }}
-                            transition={{ duration: 0.5, delay: 0.3 }}
-                            className="flex justify-center mb-8"
-                        >
-                           
-                        </motion.div>
+                    <div className="relative w-full max-w-lg">
+                        {/* Name & Role */}
+                        <div className="mb-16 overflow-hidden text-center">
+                            <motion.h1
+                                initial={{ y: 100 }}
+                                animate={{ y: 0 }}
+                                transition={{ duration: 0.8, ease: [0.16, 1, 0.3, 1] }}
+                                className="text-white text-xl md:text-2xl font-black tracking-[0.2em] uppercase"
+                            >
+                                Syed Firas
+                            </motion.h1>
+                            <motion.div
+                                initial={{ opacity: 0 }}
+                                animate={{ opacity: 1 }}
+                                transition={{ delay: 0.5, duration: 1 }}
+                                className="h-[1px] w-12 bg-white/20 mx-auto my-4"
+                            />
+                            <motion.p
+                                initial={{ opacity: 0 }}
+                                animate={{ opacity: 1 }}
+                                transition={{ delay: 0.6, duration: 1 }}
+                                className="text-gray-500 text-[10px] font-bold tracking-[0.3em] uppercase"
+                            >
+                                Mobile Experience Architect
+                            </motion.p>
+                        </div>
 
-                        {/* Progress bar */}
-                        <motion.div
-                            initial={{ opacity: 0, width: 0 }}
-                            animate={{ opacity: 1, width: '200px' }}
-                            transition={{ duration: 0.5, delay: 0.4 }}
-                            className="mx-auto mb-2"
-                        >
-                            <div className="h-1 bg-gray-200 rounded-full overflow-hidden w-[200px]">
-                                <motion.div
-                                    className="h-full bg-black rounded-full"
-                                    initial={{ width: '0%' }}
-                                    animate={{ width: `${progress}%` }}
-                                    transition={{ duration: 0.3, ease: 'easeOut' }}
-                                />
+                        {/* Large Architectural Counter */}
+                        <div className="relative flex flex-col items-center">
+                            <motion.div
+                                className="text-[8rem] md:text-[12rem] font-black text-white/5 leading-none select-none"
+                                initial={{ opacity: 0 }}
+                                animate={{ opacity: 1 }}
+                                transition={{ duration: 1 }}
+                            >
+                                {Math.floor(progress)}
+                            </motion.div>
+
+                            <div className="absolute inset-0 flex items-center justify-center">
+                                <span className="text-4xl md:text-6xl font-black text-white tracking-tighter">
+                                    {Math.floor(progress)}%
+                                </span>
                             </div>
+                        </div>
+
+                        {/* Scanning Line Animation */}
+                        <motion.div
+                            initial={{ scaleX: 0 }}
+                            animate={{ scaleX: 1 }}
+                            transition={{ duration: 1, delay: 0.2 }}
+                            className="w-full h-[1px] bg-white/10 mt-12 overflow-hidden relative"
+                        >
+                            <motion.div
+                                className="absolute top-0 left-0 h-full bg-white transition-all duration-300 ease-out"
+                                style={{ width: `${progress}%` }}
+                            />
                         </motion.div>
 
-                        {/* Loading text */}
-                        <motion.p
-                            initial={{ opacity: 0 }}
-                            animate={{ opacity: 1 }}
-                            transition={{ delay: 0.5 }}
-                            className="text-gray-500 text-xs"
-                        >
-                            Loading...
-                        </motion.p>
+                        {/* Status Bits */}
+                        <div className="mt-6 flex justify-between text-[8px] font-black uppercase tracking-widest text-gray-600">
+                            <motion.span
+                                animate={{ opacity: [0.3, 1, 0.3] }}
+                                transition={{ duration: 1.5, repeat: Infinity }}
+                            >
+                                INITIALIZING_SYSTEM
+                            </motion.span>
+                            <motion.span
+                                animate={{ opacity: [0.3, 1, 0.3] }}
+                                transition={{ duration: 1.5, repeat: Infinity, delay: 0.5 }}
+                            >
+                                FETCHING_RESOURCES
+                            </motion.span>
+                            <motion.span
+                                animate={{ opacity: [0.3, 1, 0.3] }}
+                                transition={{ duration: 1.5, repeat: Infinity, delay: 1 }}
+                            >
+                                COMPILING_EXPERIENCE
+                            </motion.span>
+                        </div>
                     </div>
                 </motion.div>
             )}
@@ -111,4 +140,3 @@ const LoadingScreen = () => {
 };
 
 export default LoadingScreen;
-

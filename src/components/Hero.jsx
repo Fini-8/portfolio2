@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from 'react';
-import { motion } from 'framer-motion';
+import { motion, AnimatePresence } from 'framer-motion';
 
 const Hero = () => {
     const [text, setText] = useState('');
@@ -7,13 +7,12 @@ const Hero = () => {
     const [loopNum, setLoopNum] = useState(0);
     const [typingSpeed, setTypingSpeed] = useState(150);
 
-    const name = "Syed Firas";
-    const texts = ["Syed Firas Peerzada", "React Native Dev", "Mobile Developer"];
+    const roles = ["React Native Developer", "Mobile App Specialist", "UI/UX Enthusiast"];
 
     useEffect(() => {
         const handleTyping = () => {
-            const i = loopNum % texts.length;
-            const fullText = texts[i];
+            const i = loopNum % roles.length;
+            const fullText = roles[i];
 
             setText(isDeleting
                 ? fullText.substring(0, text.length - 1)
@@ -32,148 +31,151 @@ const Hero = () => {
 
         const timer = setTimeout(handleTyping, typingSpeed);
         return () => clearTimeout(timer);
-    }, [text, isDeleting, loopNum, texts]);
+    }, [text, isDeleting, loopNum]);
 
     return (
-        <section id="home" className="min-h-screen flex items-center justify-center pt-8 overflow-hidden relative">
-            {/* Subtle background decorative elements */}
-            <div className="absolute top-20 left-10 w-72 h-72 bg-purple-100/40 rounded-full blur-3xl opacity-50" />
-            <div className="absolute bottom-20 right-10 w-72 h-72 bg-cyan-100/40 rounded-full blur-3xl opacity-50" />
-            <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-96 h-96 bg-gradient-to-r from-purple-100/20 to-cyan-100/20 rounded-full blur-3xl opacity-30" />
+        <section id="home" className="relative min-h-screen flex items-center justify-center pt-24 pb-12 overflow-hidden bg-[#FAFAFA]">
+            {/* Background Sophistication */}
+            <div className="absolute top-0 left-0 w-full h-full overflow-hidden pointer-events-none">
+                <div className="absolute top-[-10%] left-[-10%] w-[40%] h-[40%] bg-blue-50/50 rounded-full blur-[120px]" />
+                <div className="absolute bottom-[-10%] right-[-10%] w-[40%] h-[40%] bg-purple-50/50 rounded-full blur-[120px]" />
+            </div>
 
-            <div className="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8 flex flex-col items-center relative z-10 gap-6 py-12">
-                {/* Profile Image - Smaller */}
-                <motion.div
-                    className="flex justify-center relative"
-                    initial={{ opacity: 0, y: 30 }}
-                    animate={{ opacity: 1, y: 0 }}
-                    transition={{ duration: 0.6, ease: "easeOut" }}
-                >
-                    <div className="relative w-28 h-28 md:w-32 md:h-32">
+            <div className="w-full px-6 sm:px-12 lg:px-16 relative z-10">
+                <div className="max-w-7xl mx-auto flex flex-col items-center text-center">
 
-
-                        {/* Image wrapper */}
-                        <div className="absolute inset-2 rounded-full overflow-hidden shadow-lg bg-white">
-                            <img
-                                src="/profile.jpg"
-                                alt="Syed Firas"
-                                className="w-full h-full object-cover"
-                            />
-                        </div>
-
-
-                    </div>
-                </motion.div>
-
-                {/* Text Content */}
-                <motion.div
-                    className="text-center max-w-3xl"
-                    initial={{ opacity: 0, y: 30 }}
-                    animate={{ opacity: 1, y: 0 }}
-                    transition={{ duration: 0.6, delay: 0.2, ease: "easeOut" }}
-                >
-                    {/* Availability Badge */}
+                    {/* Floating Badge */}
                     <motion.div
-                        initial={{ opacity: 0, y: 20 }}
-                        animate={{ opacity: 1, y: 0 }}
-                        transition={{ delay: 0.3 }}
-                        className="inline-block px-4 py-1.5 mb-6 rounded-full bg-gradient-to-r from-purple-50 to-pink-50 border border-purple-100 shadow-sm"
+                        initial={{ opacity: 0, scale: 0.9 }}
+                        animate={{ opacity: 1, scale: 1 }}
+                        transition={{ duration: 0.5 }}
+                        className="mb-8 p-1 rounded-full bg-white border border-gray-100 shadow-sm inline-flex items-center gap-2 pr-4"
                     >
-                        <span className="text-sm font-medium text-black-600 tracking-wide flex items-center gap-2">
+                        <div className="flex h-8 w-8 rounded-full bg-black items-center justify-center">
                             <span className="relative flex h-2 w-2">
                                 <span className="animate-ping absolute inline-flex h-full w-full rounded-full bg-green-400 opacity-75"></span>
-                                <span className="relative inline-flex rounded-full h-2 w-2 bg-green-500"></span>
+                                <span className="relative inline-flex rounded-full h-2 w-2 bg-white"></span>
                             </span>
-                            Available for Work
+                        </div>
+                        <span className="text-xs font-bold uppercase tracking-widest text-gray-800">
+                            Open for collaborations
                         </span>
                     </motion.div>
 
-                    {/* Main Heading with Typing Animation */}
-                    <h1 className="text-3xl md:text-4xl lg:text-5xl font-normal tracking-tight mb-4 leading-tight" style={{ fontFamily: 'serif' }}>
-                        <span className="block text-gray-700 mb-1">Hi, I'm</span>
-                        <div className="relative inline-block">
-                            <span className="text-black">
-                                {text}
-                                <motion.span
-                                    animate={{ opacity: [0, 1, 0] }}
-                                    transition={{
-                                        duration: 0.8,
-                                        repeat: Infinity,
-                                        ease: "easeInOut"
-                                    }}
-                                    className="inline-block ml-1 w-[3px] h-10 md:h-12 bg-black"
+                    {/* Main Content Grid */}
+                    <div className="flex flex-col items-center">
+
+                        {/* Profile Image with Advanced Frame */}
+                        <motion.div
+                            initial={{ opacity: 0, y: 30 }}
+                            animate={{ opacity: 1, y: 0 }}
+                            transition={{ duration: 0.8, ease: [0.16, 1, 0.3, 1] }}
+                            className="relative mb-8"
+                        >
+                            <div className="relative w-40 h-40 md:w-52 md:h-52">
+                                {/* Decorative Ring */}
+                                <motion.div
+                                    animate={{ rotate: 360 }}
+                                    transition={{ duration: 20, repeat: Infinity, ease: "linear" }}
+                                    className="absolute inset-[-10%] rounded-[2.5rem] md:rounded-[3.5rem] border border-dashed border-black-200"
                                 />
-                            </span>
+
+                                {/* Image Container */}
+                                <div className="absolute inset-0 rounded-[2.5rem] md:rounded-[3.5rem] overflow-hidden bg-white shadow-2xl p-2 border border-white">
+                                    <div className="w-full h-full rounded-[2rem] md:rounded-[3rem] overflow-hidden  transition-all duration-700 ease-in-out">
+                                        <img
+                                            src="/profile.jpg"
+                                            alt="Syed Firas Peerzada"
+                                            className="w-full h-full object-cover scale-110 hover:scale-100 transition-transform duration-700"
+                                        />
+                                    </div>
+                                </div>
+
+
+                            </div>
+                        </motion.div>
+
+                        {/* Bold Typography Section */}
+                        <div className="max-w-4xl">
+                            <motion.h1
+                                initial={{ opacity: 0, y: 20 }}
+                                animate={{ opacity: 1, y: 0 }}
+                                transition={{ duration: 0.8, delay: 0.2 }}
+                                className="text-3xl md:text-5xl lg:text-6xl font-black text-gray-900 tracking-tighter mb-6 leading-[0.9]"
+                            >
+                                Syed Firas <br />
+                                <span className="text-transparent bg-clip-text bg-gradient-to-r from-gray-900 via-gray-400 to-gray-900">
+                                    Peerzada
+                                </span>
+                            </motion.h1>
+
+                            <motion.div
+                                initial={{ opacity: 0 }}
+                                animate={{ opacity: 1 }}
+                                transition={{ duration: 0.8, delay: 0.4 }}
+                                className="h-8 md:h-10 mb-4"
+                            >
+                                <p className="text-base md:text-lg font-medium text-gray-500 tracking-tight">
+                                    I am a <span className="text-black font-bold border-b-2 border-black">{text}</span>
+                                    <motion.span
+                                        animate={{ opacity: [0, 1, 0] }}
+                                        transition={{ duration: 0.8, repeat: Infinity }}
+                                        className="inline-block w-[3px] h-6 bg-black ml-1 translate-y-1"
+                                    />
+                                </p>
+                            </motion.div>
+
+                            <motion.p
+                                initial={{ opacity: 0, y: 20 }}
+                                animate={{ opacity: 1, y: 0 }}
+                                transition={{ duration: 0.8, delay: 0.6 }}
+                                className="text-sm md:text-base text-gray-500 max-w-2xl mx-auto mb-8 leading-relaxed font-medium"
+                            >
+                                Crafting high-performance mobile experiences with React Native.
+                                Currently focused on building <span className="text-black">accessible</span> and
+                                <span className="text-black"> scalable</span> digital solutions.
+                            </motion.p>
                         </div>
-                    </h1>
 
-                    {/* Subtitle */}
-                    <motion.h2
-                        className="text-lg md:text-xl text-gray-600 font-light mb-6"
-                        initial={{ opacity: 0 }}
-                        animate={{ opacity: 1 }}
-                        transition={{ delay: 0.8 }}
-                    >
-                        React Native Developer
-                        <span className="mx-2">•</span>
-                        Mobile App Specialist
-                    </motion.h2>
-
-                    {/* Description */}
-                    <motion.p
-                        className="text-base md:text-lg text-gray-600 leading-relaxed mb-8 max-w-2xl mx-auto"
-                        initial={{ opacity: 0 }}
-                        animate={{ opacity: 1 }}
-                        transition={{ delay: 1 }}
-                    >
-                        I build pixel-perfect, high-performance mobile applications with a focus on smooth user experiences.
-                        Currently studying at <span className="text-gray-900 font-medium">Anjuman Institute of Technology</span>,
-                        passionate about turning ideas into reality through code.
-                    </motion.p>
-
-                    {/* CTA Buttons */}
-                    <motion.div
-                        className="flex flex-col sm:flex-row items-center justify-center gap-3"
-                        initial={{ opacity: 0, y: 20 }}
-                        animate={{ opacity: 1, y: 0 }}
-                        transition={{ delay: 1.2 }}
-                    >
-                        <motion.a
-                            whileHover={{ scale: 1.03, y: -2 }}
-                            whileTap={{ scale: 0.98 }}
-                            href="#projects"
-                            className="group relative px-6 py-3 rounded-xl bg-gradient-to-r from-black to-gray-800 text-white font-semibold text-base shadow-md hover:shadow-lg transition-all duration-300 w-full sm:w-auto overflow-hidden"
+                        {/* CTA Buttons - Premium Minimalist */}
+                        <motion.div
+                            initial={{ opacity: 0, y: 20 }}
+                            animate={{ opacity: 1, y: 0 }}
+                            transition={{ duration: 0.8, delay: 0.8 }}
+                            className="flex flex-col sm:flex-row items-center gap-4"
                         >
-                            <span className="relative z-10 flex items-center justify-center gap-2">
-                                View Projects
-                                <svg className="w-4 h-4 transition-transform group-hover:translate-x-1" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                                    <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M17 8l4 4m0 0l-4 4m4-4H3" />
+                            <a
+                                href="#projects"
+                                className="px-10 py-5 bg-black text-white rounded-[1.5rem] font-bold text-lg hover:bg-gray-800 transition-all duration-300 shadow-xl shadow-black/10 flex items-center gap-3 group"
+                            >
+                                View My Work
+                                <svg className="w-5 h-5 transition-transform group-hover:translate-x-1" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                    <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={3} d="M17 8l4 4m0 0l-4 4m4-4H3" />
                                 </svg>
-                            </span>
-                        </motion.a>
-
-                        <motion.a
-                            whileHover={{ scale: 1.03, y: -2 }}
-                            whileTap={{ scale: 0.98 }}
-                            href="#contact"
-                            className="group px-6 py-3 rounded-xl border-2 border-gray-300 bg-white text-gray-700 font-semibold text-base hover:border-gray-400 hover:bg-gray-50 transition-all duration-300 w-full sm:w-auto"
-                        >
-                            <span className="flex items-center justify-center gap-2">
-                                Contact Me
-                                <svg className="w-4 h-4 transition-transform group-hover:translate-x-1" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                                    <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M3 8l7.89 4.26a2 2 0 002.22 0L21 8M5 19h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v10a2 2 0 002 2z" />
-                                </svg>
-                            </span>
-                        </motion.a>
-                    </motion.div>
-
-                    {/* Social Links / Stats */}
-
-                </motion.div>
+                            </a>
+                            <a
+                                href="#contact"
+                                className="px-10 py-5 bg-white text-black border-2 border-gray-100 rounded-[1.5rem] font-bold text-lg hover:bg-gray-50 transition-all duration-300 flex items-center gap-3"
+                            >
+                                Let's Talk
+                                <div className="w-2 h-2 rounded-full bg-green-500 animate-pulse" />
+                            </a>
+                        </motion.div>
+                    </div>
+                </div>
             </div>
 
-            {/* Scroll Indicator */}
-
+            {/* Floating Decorative Elements */}
+            <motion.div
+                animate={{ y: [0, 20, 0], rotate: [0, 10, 0] }}
+                transition={{ duration: 6, repeat: Infinity, ease: "easeInOut" }}
+                className="absolute right-[10%] top-[20%] w-12 h-12 bg-white rounded-2xl shadow-xl border border-gray-50 hidden lg:block"
+            />
+            <motion.div
+                animate={{ y: [0, -20, 0], rotate: [0, -10, 0] }}
+                transition={{ duration: 5, repeat: Infinity, ease: "easeInOut" }}
+                className="absolute left-[15%] bottom-[15%] w-8 h-8 bg-black rounded-lg shadow-xl hidden lg:block"
+            />
         </section>
     );
 };

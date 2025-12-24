@@ -6,116 +6,131 @@ const internships = [
         title: 'Web Development Internship',
         company: 'My Job Grow & IIT Hyderabad',
         date: '2025',
-        description: 'Completed internship in collaboration with E&N IIT Hyderabad, focusing on modern web technologies.',
+        description: 'Completed internship in collaboration with E&N IIT Hyderabad, focusing on modern web technologies and full-stack integration.',
         image: '/internship-iit.jpg',
-        color: 'border-blue-500'
+        color: 'bg-blue-50 text-blue-600 border-blue-100'
     },
     {
         title: 'Web Development Course',
         company: 'My Job Grow',
         date: 'October 2025',
-        description: 'Successfully completed Web Development Upskilling Course, mastering full-stack concepts.',
+        description: 'Successfully completed Web Development Upskilling Course, mastering full-stack concepts, database design, and responsive UI.',
         image: '/course-webdev.jpg',
-        color: 'border-purple-500'
+        color: 'bg-purple-50 text-purple-600 border-purple-100'
     },
     {
         title: 'Frontend Internship',
         company: 'iTecz Solutions',
         date: 'March 2025 - June 2025',
-        description: 'Developed scalable web applications using Ionic and Angular frameworks.',
+        description: 'Developed scalable web applications using Ionic and Angular frameworks, focusing on component-driven architecture.',
         image: '/internship-cert.jpg',
-        color: 'border-cyan-500'
+        color: 'bg-cyan-50 text-cyan-600 border-cyan-100'
     }
 ];
 
 const hackathons = [
     {
-        title: 'CodeFest',
-        role: 'Frontend Developer',
-        description: 'Collaborated on building a responsive web application.',
+        title: 'AI HACKDAY BANGALURU',
+        role: 'Full-Stack Developer',
+        description: 'Developed a comprehensive platform to help Content Creators leverage AI for smart scripting and analysis.',
         date: '2025',
-        achievement: 'Participation',
-        image: '/codefest-cert.jpg'
+        achievement: 'Finalist',
+        image: '/Syed Firas_page-0001.jpg',
+        color: 'bg-indigo-50 text-indigo-600 border-indigo-100',
+        details: 'Collaborated in a high-intensity environment to deliver a functional MVP within 24 hours. Focused on AI API integration and responsive frontend design.'
+    },
+    {
+        title: 'Innovex',
+        role: 'Lead Frontend Developer',
+        description: 'Built SAHAYA - A women safety application with real-time location sharing and emergency alerts. Selected among top 10 teams.',
+        date: '2025',
+        achievement: 'Top 10',
+        image: '/innovex-cert.jpg',
+        color: 'bg-rose-50 text-rose-600 border-rose-100',
+        details: 'Spearheaded the frontend development of SAHAYA. Implemented complex geolocation features and emergency trigger protocols. Won recognition for UX/UI excellence.'
     },
     {
         title: 'HackPrix',
         role: 'Frontend Developer',
-        description: 'Developed the user interface for a solution addressing real-world problems.',
+        description: 'Developed the user interface for a solution addressing regional social problems through tech-driven intervention.',
         date: '2025',
         achievement: 'Participation',
-        image: '/hackprix-cert.jpg'
+        image: '/hackprix-cert.jpg',
+        color: 'bg-emerald-50 text-emerald-600 border-emerald-100',
+        details: 'Focused on accessibility and local language integration to ensure the solution could be used by a wide demographic.'
     },
     {
-        title: 'Innovex',
+        title: 'CodeFest',
         role: 'Frontend Developer',
-        description: 'Built SAHAYA - A women safety application with real-time location sharing and emergency alerts. Our innovative solution was selected among the top 10 teams.',
-        date: '2025',
-        achievement: 'Top 10',
-        image: '/innovex-cert.jpg'
-    },
-    {
-        title: 'AI HACKDAY BANGALURU',
-        role: 'Full-Stack',
-        description: 'Developed a website to help Content Creators using AI',
+        description: 'Collaborated on building a responsive web application during a high-energy development sprint.',
         date: '2025',
         achievement: 'Participation',
-        image: '/Syed Firas_page-0001.jpg'
+        image: '/codefest-cert.jpg',
+        color: 'bg-slate-50 text-slate-600 border-slate-100',
+        details: 'Gained hands-on experience in rapid prototyping and teamwork using modern frontend libraries.'
     }
 ];
 
 const Achievements = () => {
-    const [selectedCertificate, setSelectedCertificate] = useState(null);
+    const [selectedEvent, setSelectedEvent] = useState(null);
 
     return (
-        <section id="achievements" className="py-20 relative bg-gray-50/50">
-            <div className="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8">
-                <motion.div
-                    initial={{ opacity: 0, y: 30 }}
-                    whileInView={{ opacity: 1, y: 0 }}
-                    viewport={{ once: true }}
-                    transition={{ duration: 0.6 }}
-                    className="text-center mb-16"
-                >
-                    <h2 className="text-3xl md:text-4xl font-bold mb-4 text-gray-900">
-                        <span className="text-black">Achievements & Internships</span>
-                    </h2>
-                    <p className="max-w-2xl mx-auto text-base md:text-lg text-gray-600">
-                        Recognition of my skills and participation in tech events
-                    </p>
-                </motion.div>
+        <section id="achievements" className="py-24 bg-white">
+            <div className="w-full px-6 sm:px-12 lg:px-16">
 
-                {/* Internships Section */}
-                <div className="mb-20">
-                    <div className="flex items-center mb-10">
-                        <div className="h-8 w-1 bg-primary rounded-full mr-4" />
-                        <h3 className="text-xl font-bold text-gray-900">Internships & Certifications</h3>
+                {/* Header Section */}
+                <div className="max-w-7xl mx-auto mb-20">
+                    <motion.span
+                        initial={{ opacity: 0 }}
+                        whileInView={{ opacity: 1 }}
+                        className="text-xs font-bold tracking-widest text-gray-400 uppercase mb-4 block"
+                    >
+                        Success & Learning
+                    </motion.span>
+                    <h2 className="text-2xl md:text-3xl font-bold text-gray-900 tracking-tight">
+                        Selected Achievements
+                    </h2>
+                </div>
+
+                {/* Internships & Certifications Grid */}
+                <div className="max-w-7xl mx-auto mb-24">
+                    <div className="flex items-center gap-4 mb-10">
+                        <h3 className="text-lg font-bold text-gray-900">Experience & Growth</h3>
+                        <div className="h-[1px] flex-1 bg-gray-100 hidden sm:block" />
                     </div>
 
-                    <div className="grid gap-8 md:grid-cols-2 lg:grid-cols-3">
+                    <div className="grid gap-8 sm:grid-cols-2 lg:grid-cols-3">
                         {internships.map((intern, index) => (
                             <motion.div
                                 key={index}
                                 initial={{ opacity: 0, y: 30 }}
                                 whileInView={{ opacity: 1, y: 0 }}
                                 viewport={{ once: true }}
-                                transition={{ delay: index * 0.1 }}
-                                whileHover={{ y: -5 }}
-                                className="bg-white rounded-2xl overflow-hidden border border-gray-200 shadow-md hover:shadow-xl transition-all duration-300 group"
+                                transition={{ duration: 0.5, delay: index * 0.1 }}
+                                whileHover={{ y: -10 }}
+                                className="group bg-[#FAFAFA] rounded-[2.5rem] overflow-hidden border border-gray-100 transition-all duration-500 hover:shadow-2xl hover:bg-white"
                             >
-                                <div className="h-48 overflow-hidden bg-gray-100 relative">
+                                <div className="h-60 overflow-hidden relative">
                                     <img
-                                        className="h-full w-full object-cover transform transition-transform duration-500 group-hover:scale-105"
                                         src={intern.image}
                                         alt={intern.title}
+                                        className="w-full h-full object-cover grayscale group-hover:grayscale-0 transition-all duration-700 ease-in-out"
                                     />
-                                    <div className="absolute top-4 right-4 bg-white/90 backdrop-blur-sm px-3 py-1 rounded-full text-xs font-medium text-gray-700 border border-gray-200 shadow-sm">
-                                        {intern.date}
+                                    <div className="absolute inset-0 bg-black/5 opacity-0 group-hover:opacity-100 transition-opacity duration-500" />
+                                    <div className="absolute top-6 left-6">
+                                        <span className="px-3 py-1 rounded-full text-[10px] font-bold uppercase tracking-widest bg-white/90 backdrop-blur-md border border-gray-100">
+                                            {intern.date}
+                                        </span>
                                     </div>
                                 </div>
-                                <div className="p-6">
-                                    <h4 className="text-lg font-bold text-gray-900 group-hover:text-primary transition-colors duration-300 mb-2">{intern.title}</h4>
-                                    <p className="text-secondary font-medium text-xs mb-3">{intern.company}</p>
-                                    <p className="text-gray-600 text-xs leading-relaxed">{intern.description}</p>
+                                <div className="p-10">
+                                    <p className="text-[10px] font-bold text-gray-400 uppercase tracking-widest mb-3">{intern.company}</p>
+                                    <h4 className="text-lg font-black text-gray-900 mb-4 tracking-tight leading-tight group-hover:text-primary transition-colors">
+                                        {intern.title}
+                                    </h4>
+                                    <p className="text-gray-500 text-xs font-medium leading-relaxed">
+                                        {intern.description}
+                                    </p>
                                 </div>
                             </motion.div>
                         ))}
@@ -123,117 +138,117 @@ const Achievements = () => {
                 </div>
 
                 {/* Hackathons Section */}
-                <div>
-                    <div className="flex items-center mb-10">
-                        <div className="h-8 w-1 bg-secondary rounded-full mr-4" />
-                        <h3 className="text-xl font-bold text-gray-900">Hackathons Attended</h3>
+                <div className="max-w-7xl mx-auto">
+                    <div className="flex items-center gap-4 mb-10">
+                        <h3 className="text-lg font-bold text-gray-900">Events & Innovation</h3>
+                        <div className="h-[1px] flex-1 bg-gray-100 hidden sm:block" />
                     </div>
 
-                    <div className="grid gap-8 md:grid-cols-2 lg:grid-cols-3">
+                    <div className="grid gap-6 sm:grid-cols-3">
                         {hackathons.map((hack, index) => (
                             <motion.div
                                 key={index}
-                                initial={{ opacity: 0, y: 30 }}
-                                whileInView={{ opacity: 1, y: 0 }}
+                                initial={{ opacity: 0, scale: 0.95 }}
+                                whileInView={{ opacity: 1, scale: 1 }}
                                 viewport={{ once: true }}
-                                transition={{ delay: index * 0.1 }}
-                                whileHover={{ y: -5 }}
-                                className="bg-white rounded-2xl p-6 border border-gray-200 hover:border-gray-300 transition-all duration-300 hover:shadow-lg group"
+                                transition={{ duration: 0.5, delay: index * 0.1 }}
+                                onClick={() => setSelectedEvent(hack)}
+                                className="group cursor-pointer bg-white rounded-[2rem] p-8 border border-gray-100 hover:border-black transition-all duration-500 flex flex-col items-center text-center hover:shadow-xl"
                             >
-                                <div className="flex justify-between items-start mb-4">
-                                    <div className="h-12 w-12 rounded-xl bg-purple-50 flex items-center justify-center text-2xl border border-purple-100 group-hover:bg-purple-100 transition-colors duration-300">
-                                        🏆
-                                    </div>
-                                    <span className={`px-3 py-1 rounded-full text-xs font-semibold border ${hack.achievement === 'Top 10'
-                                        ? 'bg-yellow-50 text-yellow-700 border-yellow-200'
-                                        : 'bg-gray-50 text-gray-600 border-gray-200'
-                                        }`}>
-                                        {hack.achievement}
-                                    </span>
+                                <div className="w-16 h-16 rounded-[1.5rem] bg-black flex items-center justify-center text-white mb-6 group-hover:scale-110 transition-transform duration-500 shadow-lg shadow-black/10">
+                                    <svg className="w-8 h-8" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                        <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M5 3v4M3 5h4M6 17v4m-2-2h4m5-16l2.286 6.857L21 12l-7.714 2.143L11 21l-2.286-6.857L1 12l7.714-2.143L11 3z" />
+                                    </svg>
                                 </div>
+                                <span className={`px-3 py-1 rounded-full text-[10px] font-black uppercase tracking-tighter ${hack.color} border mb-4`}>
+                                    {hack.achievement}
+                                </span>
+                                <h4 className="text-lg font-bold text-gray-900 mb-2">{hack.title}</h4>
+                                <p className="text-gray-400 text-sm font-medium mb-6">{hack.role}</p>
 
-                                <h4 className="text-base font-bold text-gray-900 mb-1 group-hover:text-primary transition-colors duration-300">{hack.title}</h4>
-                                <p className="text-xs text-secondary font-medium mb-3">{hack.role}</p>
-                                <p className="text-gray-600 text-xs mb-4 line-clamp-2 leading-relaxed">{hack.description}</p>
-
-                                <div className="pt-4 border-t border-gray-100 flex justify-between items-center text-xs text-gray-500">
-                                    <span>{hack.date}</span>
-                                    <button
-                                        onClick={() => setSelectedCertificate(hack)}
-                                        className="text-primary hover:text-secondary transition-colors cursor-pointer font-medium"
-                                    >
-                                        View Details →
-                                    </button>
-                                </div>
+                                <button className="mt-auto text-xs font-black uppercase tracking-widest text-black border-b-2 border-transparent group-hover:border-black transition-all">
+                                    View details
+                                </button>
                             </motion.div>
                         ))}
                     </div>
                 </div>
             </div>
 
-            {/* Certificate Modal */}
+            {/* Split-Screen Event Modal */}
             <AnimatePresence>
-                {selectedCertificate && (
+                {selectedEvent && (
                     <motion.div
                         initial={{ opacity: 0 }}
                         animate={{ opacity: 1 }}
                         exit={{ opacity: 0 }}
-                        onClick={() => setSelectedCertificate(null)}
-                        className="fixed inset-0 bg-black/80 backdrop-blur-sm z-50 flex items-center justify-center p-4"
+                        onClick={() => setSelectedEvent(null)}
+                        className="fixed inset-0 bg-white/80 backdrop-blur-xl z-[70] flex items-center justify-center p-4 md:p-8"
                     >
                         <motion.div
-                            initial={{ scale: 0.9, opacity: 0 }}
-                            animate={{ scale: 1, opacity: 1 }}
-                            exit={{ scale: 0.9, opacity: 0 }}
+                            initial={{ opacity: 0, scale: 0.95, y: 20 }}
+                            animate={{ opacity: 1, scale: 1, y: 0 }}
+                            exit={{ opacity: 0, scale: 0.95, y: 20 }}
                             onClick={(e) => e.stopPropagation()}
-                            className="bg-white rounded-2xl max-w-4xl w-full max-h-[90vh] overflow-auto shadow-2xl"
+                            className="bg-white rounded-[2.5rem] max-w-6xl w-full max-h-[90vh] overflow-hidden shadow-[0_48px_80px_-20px_rgba(0,0,0,0.1)] flex flex-col md:flex-row relative border border-gray-100"
                         >
-                            {/* Modal Header */}
-                            <div className="sticky top-0 bg-white border-b border-gray-200 p-6 flex justify-between items-start z-10">
-                                <div>
-                                    <h3 className="text-2xl font-bold text-gray-900 mb-2">{selectedCertificate.title}</h3>
-                                    <p className="text-sm text-gray-600">{selectedCertificate.role} • {selectedCertificate.date}</p>
-                                </div>
-                                <button
-                                    onClick={() => setSelectedCertificate(null)}
-                                    className="p-2 hover:bg-gray-100 rounded-full transition-colors"
-                                >
-                                    <svg className="w-6 h-6 text-gray-600" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                                        <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M6 18L18 6M6 6l12 12" />
-                                    </svg>
-                                </button>
+                            <button
+                                onClick={() => setSelectedEvent(null)}
+                                className="absolute top-8 right-8 p-3 bg-gray-50 rounded-full hover:bg-black hover:text-white transition-all duration-300 z-10"
+                            >
+                                <svg className="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                    <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M6 18L18 6M6 6l12 12" />
+                                </svg>
+                            </button>
+
+                            {/* Modal Left: Dynamic Visual */}
+                            <div className="md:w-1/2 h-64 md:h-auto relative overflow-hidden bg-[#FAFAFA]">
+                                <img
+                                    src={selectedEvent.image}
+                                    alt={selectedEvent.title}
+                                    className="w-full h-full object-contain p-8 md:p-12 hover:scale-105 transition-transform duration-700"
+                                />
+                                <div className="absolute inset-0 bg-gradient-to-t from-white/10 to-transparent pointer-events-none" />
                             </div>
 
-                            {/* Modal Content */}
-                            <div className="p-6">
-                                <div className="mb-6">
-                                    <h4 className="text-sm font-semibold text-gray-700 mb-2">Description</h4>
-                                    <p className="text-gray-600 leading-relaxed">{selectedCertificate.description}</p>
+                            {/* Modal Right: Technical Info */}
+                            <div className="md:w-1/2 p-10 md:p-16 overflow-y-auto">
+                                <span className={`inline-block px-4 py-1.5 rounded-full text-[10px] font-black tracking-widest uppercase mb-6 border ${selectedEvent.color}`}>
+                                    {selectedEvent.achievement}
+                                </span>
+
+                                <h2 className="text-2xl md:text-3xl font-black text-gray-900 tracking-tighter mb-4 leading-none">
+                                    {selectedEvent.title}
+                                </h2>
+
+                                <div className="flex items-center gap-3 text-gray-400 font-bold uppercase tracking-widest text-xs mb-10">
+                                    <span>{selectedEvent.role}</span>
+                                    <div className="w-1.5 h-1.5 rounded-full bg-gray-200" />
+                                    <span>{selectedEvent.date}</span>
                                 </div>
 
-                                <div className="mb-6">
-                                    <h4 className="text-sm font-semibold text-gray-700 mb-3">Certificate</h4>
-                                    <div className="bg-gray-50 rounded-xl overflow-hidden border border-gray-200">
-                                        <img
-                                            src={selectedCertificate.image}
-                                            alt={`${selectedCertificate.title} Certificate`}
-                                            className="w-full h-auto"
-                                        />
+                                <div className="space-y-10">
+                                    <div>
+                                        <h3 className="text-sm font-bold uppercase tracking-widest text-gray-900 mb-4 border-l-4 border-black pl-4">Perspective</h3>
+                                        <p className="text-gray-500 text-lg leading-relaxed font-medium">
+                                            {selectedEvent.description}
+                                        </p>
                                     </div>
-                                </div>
 
-                                <div className="flex items-center justify-between pt-4 border-t border-gray-200">
-                                    <span className={`px-4 py-2 rounded-full text-sm font-semibold border ${selectedCertificate.achievement === 'Top 10'
-                                        ? 'bg-yellow-50 text-yellow-700 border-yellow-200'
-                                        : 'bg-gray-50 text-gray-600 border-gray-200'
-                                        }`}>
-                                        {selectedCertificate.achievement}
-                                    </span>
+                                    {selectedEvent.details && (
+                                        <div>
+                                            <h3 className="text-sm font-bold uppercase tracking-widest text-gray-900 mb-4 border-l-4 border-black pl-4">Core Contribution</h3>
+                                            <p className="text-gray-500 text-lg leading-relaxed font-medium italic">
+                                                "{selectedEvent.details}"
+                                            </p>
+                                        </div>
+                                    )}
+
                                     <button
-                                        onClick={() => setSelectedCertificate(null)}
-                                        className="px-6 py-2 bg-black text-white rounded-lg hover:bg-gray-800 transition-colors font-medium"
+                                        onClick={() => setSelectedEvent(null)}
+                                        className="w-full py-5 bg-black text-white rounded-2xl font-black text-sm uppercase tracking-[0.2em] hover:bg-gray-800 transition-all duration-300 shadow-xl shadow-black/10"
                                     >
-                                        Close
+                                        Dismiss View
                                     </button>
                                 </div>
                             </div>
