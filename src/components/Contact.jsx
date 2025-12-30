@@ -42,8 +42,8 @@ const Contact = () => {
                 </svg>
             ),
             title: 'GitHub Portal',
-            value: 'github.com/Fini-8',
-            href: 'https://github.com/Fini-8',
+            value: 'github.com/syedfiras',
+            href: 'https://github.com/syedfiras',
             label: 'Check my latest code'
         },
         {
