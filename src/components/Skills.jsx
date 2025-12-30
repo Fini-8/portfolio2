@@ -1,20 +1,22 @@
 import React from 'react';
 import { motion } from 'framer-motion';
+import { FaReact, FaAngular, FaNodeJs, FaGithub, FaGitAlt } from 'react-icons/fa';
+import { SiIonic, SiJavascript, SiTypescript, SiMongodb, SiSupabase, SiTailwindcss, SiMysql } from 'react-icons/si';
 
 const skills = [
-    'React Native',
-    'Ionic',
-    'Angular',
-    'React.js',
-    'JavaScript',
-    'TypeScript',
-    'Node.js',
-    'MongoDB',
-    'Git / GitHub',
-    'Supabase',
-    'Nativewind CSS',
-    'Tailwind CSS',
-    'MySql'
+    { name: 'React Native', icon: FaReact },
+    { name: 'Ionic', icon: SiIonic },
+    { name: 'Angular', icon: FaAngular },
+    { name: 'React.js', icon: FaReact },
+    { name: 'JavaScript', icon: SiJavascript },
+    { name: 'TypeScript', icon: SiTypescript },
+    { name: 'Node.js', icon: FaNodeJs },
+    { name: 'MongoDB', icon: SiMongodb },
+    { name: 'Git / GitHub', icon: FaGithub },
+    { name: 'Supabase', icon: SiSupabase },
+    { name: 'Nativewind CSS', icon: SiTailwindcss },
+    { name: 'Tailwind CSS', icon: SiTailwindcss },
+    { name: 'MySql', icon: SiMysql }
 ];
 
 const Skills = () => {
@@ -43,7 +45,7 @@ const Skills = () => {
                         className="flex flex-wrap justify-center gap-4"
                         initial="hidden"
                         whileInView="show"
-                        viewport={{ once: true }}
+                        viewport={{ once: false }}
                         variants={{
                             hidden: { opacity: 0 },
                             show: {
@@ -52,9 +54,9 @@ const Skills = () => {
                             }
                         }}
                     >
-                        {skills.map((skill) => (
+                        {skills.map((skill, index) => (
                             <motion.div
-                                key={skill}
+                                key={skill.name}
                                 variants={{
                                     hidden: { opacity: 0, scale: 0.9, y: 10 },
                                     show: { opacity: 1, scale: 1, y: 0 }
@@ -68,8 +70,8 @@ const Skills = () => {
                                 transition={{ type: 'spring', stiffness: 300, damping: 20 }}
                                 className="px-6 py-3 rounded-[1.2rem] bg-[#FAFAFA] text-gray-900 border-2 border-gray-50 font-bold text-xs transition-all duration-300 cursor-default shadow-sm hover:shadow-[0_20px_40px_-10px_rgba(0,0,0,0.1)] flex items-center gap-2 group"
                             >
-                                <span className="w-1 h-1 rounded-full bg-black group-hover:bg-white transition-colors" />
-                                {skill}
+                                <skill.icon className="w-4 h-4 text-gray-400 group-hover:text-white transition-colors" />
+                                {skill.name}
                             </motion.div>
                         ))}
                     </motion.div>

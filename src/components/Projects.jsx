@@ -1,5 +1,6 @@
 import React, { useState } from 'react';
 import { motion, AnimatePresence } from 'framer-motion';
+import { FaGithub } from 'react-icons/fa';
 import creatorflowImg from "../assets/cfai.png";
 import sahaya from "../assets/sahaya.jpeg";
 import expen from "../assets/expence.png";
@@ -12,6 +13,7 @@ const mainProjects = [
         tech: ['Ionic', 'Angular', 'TypeScript', 'Supabase'],
         image: 'https://images.unsplash.com/photo-1534438327276-14e5300c3a48?ixlib=rb-1.2.1&auto=format&fit=crop&w=500&q=60',
         link: 'https://gymnetsolutions.netlify.app',
+        github: 'https://github.com/AhmedGannam/Gym-Management-App',
         color: 'bg-blue-50 text-blue-600 border-blue-100',
         accentColor: '#3b82f6',
         features: ['Member Management', 'Payment Processing', 'Analytics Dashboard']
@@ -23,6 +25,7 @@ const mainProjects = [
         tech: ['React', 'Node.js', 'Supabase', 'AI/ML'],
         image: creatorflowImg,
         link: 'https://cfai.lovable.app',
+        github: 'https://github.com/syedfiras/creator-flow-ai',
         color: 'bg-purple-50 text-purple-600 border-purple-100',
         accentColor: '#8b5cf6',
         features: ['AI Script Generation', 'Content Analysis', 'Hook Creator', 'Performance Insights', 'Multi-platform Support']
@@ -37,6 +40,7 @@ const additionalProjects = [
         tech: ['React Native', 'Geolocation', 'Emergency API'],
         image: sahaya,
         link: '',
+        github: 'https://github.com/syedfiras/sahaya',
         color: 'bg-rose-50 text-rose-600 border-rose-100',
         accentColor: '#f43f5e',
         features: ['Emergency Alerts', 'Location Sharing', 'Safe Routes', 'Emergency Contacts']
@@ -48,6 +52,7 @@ const additionalProjects = [
         tech: ['React Native', 'Node.js', 'MongoDB'],
         image: 'https://images.unsplash.com/photo-1484480974693-6ca0a78fb36b?ixlib=rb-1.2.1&auto=format&fit=crop&w=500&q=60',
         link: '',
+        github: 'https://github.com/syedfiras/to_do_app',
         color: 'bg-amber-50 text-amber-600 border-amber-100',
         accentColor: '#f59e0b',
         features: ['Task Categories', 'Priority Levels', 'Reminders', 'Progress Tracking']
@@ -59,6 +64,7 @@ const additionalProjects = [
         tech: ['React Native'],
         image: expen,
         link: '',
+        github: 'https://github.com/syedfiras/expense_tracker',
         color: 'bg-emerald-50 text-emerald-600 border-emerald-100',
         accentColor: '#10b981',
         features: ['Expense Tracking', 'Budget Management', 'Visual Analytics', 'Monthly Reports']
@@ -73,7 +79,7 @@ const Projects = () => {
             key={index}
             initial={{ opacity: 0, y: 20 }}
             whileInView={{ opacity: 1, y: 0 }}
-            viewport={{ once: true }}
+            viewport={{ once: false }}
             transition={{ duration: 0.5, delay: index * 0.1 }}
             className="group relative bg-white rounded-3xl overflow-hidden border border-gray-100 shadow-sm hover:shadow-xl transition-all duration-500"
         >
@@ -239,6 +245,17 @@ const Projects = () => {
                                                 <svg className="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                                                     <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M14 5l7 7m0 0l-7 7m7-7H3" />
                                                 </svg>
+                                            </a>
+                                        )}
+                                        {selectedProject.github && (
+                                            <a
+                                                href={selectedProject.github}
+                                                target="_blank"
+                                                rel="noopener noreferrer"
+                                                className="px-8 py-4 bg-gray-900 text-white rounded-2xl hover:bg-black transition-all duration-300 font-bold flex items-center gap-2 shadow-lg shadow-black/10"
+                                            >
+                                                GitHub Code
+                                                <FaGithub className="w-5 h-5" />
                                             </a>
                                         )}
                                         <button

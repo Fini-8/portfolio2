@@ -5,39 +5,60 @@ const internships = [
     {
         title: 'Web Development Internship',
         company: 'My Job Grow & IIT Hyderabad',
+        role: 'Web Developer Intern',
         date: '2025',
         description: 'Completed internship in collaboration with E&N IIT Hyderabad, focusing on modern web technologies and full-stack integration.',
+        details: 'Worked on real-world projects, implementing responsive designs and integrating APIs. Collaborated with cross-functional teams to deliver high-quality web solutions.',
         image: '/internship-iit.jpg',
-        color: 'bg-blue-50 text-blue-600 border-blue-100'
+        color: 'bg-blue-50 text-blue-600 border-blue-100',
+        achievement: 'Completed'
     },
     {
         title: 'Web Development Course',
         company: 'My Job Grow',
+        role: 'Student',
         date: 'October 2025',
         description: 'Successfully completed Web Development Upskilling Course, mastering full-stack concepts, database design, and responsive UI.',
+        details: 'Gained proficiency in MERN stack, database management, and deployment strategies. Built multiple capstone projects demonstrating full-stack capabilities.',
         image: '/course-webdev.jpg',
-        color: 'bg-purple-50 text-purple-600 border-purple-100'
+        color: 'bg-purple-50 text-purple-600 border-purple-100',
+        achievement: 'Certified'
     },
     {
         title: 'Frontend Internship',
         company: 'iTecz Solutions',
+        role: 'Frontend Intern',
         date: 'March 2025 - June 2025',
         description: 'Developed scalable web applications using Ionic and Angular frameworks, focusing on component-driven architecture.',
+        details: 'Contributed to the development of a large-scale enterprise application. Optimized rendering performance and ensured cross-browser compatibility.',
         image: '/internship-cert.jpg',
-        color: 'bg-cyan-50 text-cyan-600 border-cyan-100'
+        color: 'bg-cyan-50 text-cyan-600 border-cyan-100',
+        achievement: 'Completed'
     }
 ];
 
 const hackathons = [
     {
-        title: 'AI HACKDAY BANGALURU',
-        role: 'Full-Stack Developer',
-        description: 'Developed a comprehensive platform to help Content Creators leverage AI for smart scripting and analysis.',
+        title: 'CodeFest',
+        role: 'Frontend Developer',
+        description: 'Collaborated on building a responsive web application during a high-energy development sprint.',
         date: '2025',
-        achievement: 'Finalist',
-        image: '/Syed Firas_page-0001.jpg',
-        color: 'bg-indigo-50 text-indigo-600 border-indigo-100',
-        details: 'Collaborated in a high-intensity environment to deliver a functional MVP within 24 hours. Focused on AI API integration and responsive frontend design.'
+        achievement: 'Participation',
+        image: '/codefest-cert.jpg',
+        color: 'bg-slate-50 text-slate-600 border-slate-100',
+        details: 'Gained hands-on experience in rapid prototyping and teamwork using modern frontend libraries.'
+
+    },
+    {
+        title: 'HackPrix',
+        role: 'Frontend Developer',
+        description: 'Developed the user interface for a solution addressing regional social problems through tech-driven intervention.',
+        date: '2025',
+        achievement: 'Participation',
+        image: '/hackprix-cert.jpg',
+        color: 'bg-emerald-50 text-emerald-600 border-emerald-100',
+        details: 'Focused on accessibility and local language integration to ensure the solution could be used by a wide demographic.'
+
     },
     {
         title: 'Innovex',
@@ -50,24 +71,14 @@ const hackathons = [
         details: 'Spearheaded the frontend development of SAHAYA. Implemented complex geolocation features and emergency trigger protocols. Won recognition for UX/UI excellence.'
     },
     {
-        title: 'HackPrix',
-        role: 'Frontend Developer',
-        description: 'Developed the user interface for a solution addressing regional social problems through tech-driven intervention.',
+        title: 'AI HACKDAY BANGALURU',
+        role: 'Full-Stack Developer',
+        description: 'Developed a comprehensive platform to help Content Creators leverage AI for smart scripting and analysis.',
         date: '2025',
-        achievement: 'Participation',
-        image: '/hackprix-cert.jpg',
-        color: 'bg-emerald-50 text-emerald-600 border-emerald-100',
-        details: 'Focused on accessibility and local language integration to ensure the solution could be used by a wide demographic.'
-    },
-    {
-        title: 'CodeFest',
-        role: 'Frontend Developer',
-        description: 'Collaborated on building a responsive web application during a high-energy development sprint.',
-        date: '2025',
-        achievement: 'Participation',
-        image: '/codefest-cert.jpg',
-        color: 'bg-slate-50 text-slate-600 border-slate-100',
-        details: 'Gained hands-on experience in rapid prototyping and teamwork using modern frontend libraries.'
+        achievement: 'Finalist',
+        image: '/Syed Firas_page-0001.jpg',
+        color: 'bg-indigo-50 text-indigo-600 border-indigo-100',
+        details: 'Collaborated in a high-intensity environment to deliver a functional MVP within 24 hours. Focused on AI API integration and responsive frontend design.'
     }
 ];
 
@@ -79,7 +90,7 @@ const Achievements = () => {
             <div className="w-full px-6 sm:px-12 lg:px-16">
 
                 {/* Header Section */}
-                <div className="max-w-7xl mx-auto mb-20">
+                <div className="max-w-7xl mx-auto mb-20 text-center">
                     <motion.span
                         initial={{ opacity: 0 }}
                         whileInView={{ opacity: 1 }}
@@ -90,47 +101,49 @@ const Achievements = () => {
                     <h2 className="text-2xl md:text-3xl font-bold text-gray-900 tracking-tight">
                         Selected Achievements
                     </h2>
+                    <div className="w-16 h-1 bg-black mx-auto mt-6 rounded-full" />
                 </div>
 
-                {/* Internships & Certifications Grid */}
+                {/* Internships & Certifications Section */}
                 <div className="max-w-7xl mx-auto mb-24">
                     <div className="flex items-center gap-4 mb-10">
                         <h3 className="text-lg font-bold text-gray-900">Experience & Growth</h3>
                         <div className="h-[1px] flex-1 bg-gray-100 hidden sm:block" />
                     </div>
 
-                    <div className="grid gap-8 sm:grid-cols-2 lg:grid-cols-3">
+                    {/* Horizontal Scroll Container */}
+                    <div className="flex overflow-x-auto pb-8 -mx-6 px-6 sm:mx-0 sm:px-0 gap-6 snap-x hide-scrollbar">
                         {internships.map((intern, index) => (
                             <motion.div
                                 key={index}
-                                initial={{ opacity: 0, y: 30 }}
-                                whileInView={{ opacity: 1, y: 0 }}
-                                viewport={{ once: true }}
+                                initial={{ opacity: 0, x: 50 }}
+                                whileInView={{ opacity: 1, x: 0 }}
+                                viewport={{ once: false }}
                                 transition={{ duration: 0.5, delay: index * 0.1 }}
-                                whileHover={{ y: -10 }}
-                                className="group bg-[#FAFAFA] rounded-[2.5rem] overflow-hidden border border-gray-100 transition-all duration-500 hover:shadow-2xl hover:bg-white"
+                                onClick={() => setSelectedEvent(intern)}
+                                className="group shrink-0 w-[85vw] sm:w-[400px] snap-center cursor-pointer bg-[#FAFAFA] rounded-[2.5rem] overflow-hidden border border-gray-100 transition-all duration-500 hover:shadow-2xl hover:bg-white flex flex-col"
                             >
-                                <div className="h-60 overflow-hidden relative">
-                                    <img
-                                        src={intern.image}
-                                        alt={intern.title}
-                                        className="w-full h-full object-cover grayscale group-hover:grayscale-0 transition-all duration-700 ease-in-out"
-                                    />
-                                    <div className="absolute inset-0 bg-black/5 opacity-0 group-hover:opacity-100 transition-opacity duration-500" />
-                                    <div className="absolute top-6 left-6">
-                                        <span className="px-3 py-1 rounded-full text-[10px] font-bold uppercase tracking-widest bg-white/90 backdrop-blur-md border border-gray-100">
-                                            {intern.date}
+                                <div className="p-8 sm:p-10 flex flex-col flex-1">
+                                    <div className="flex justify-between items-start mb-6">
+                                        <div>
+                                            <span className="px-3 py-1 rounded-full text-[10px] font-bold uppercase tracking-widest bg-gray-100 border border-gray-200 mb-3 inline-block">
+                                                {intern.date}
+                                            </span>
+                                            <p className="text-[10px] font-bold text-gray-400 uppercase tracking-widest">{intern.company}</p>
+                                        </div>
+                                        <span className={`px-2 py-0.5 rounded-full text-[9px] font-bold uppercase tracking-widest ${intern.color} border`}>
+                                            {intern.achievement}
                                         </span>
                                     </div>
-                                </div>
-                                <div className="p-10">
-                                    <p className="text-[10px] font-bold text-gray-400 uppercase tracking-widest mb-3">{intern.company}</p>
-                                    <h4 className="text-lg font-black text-gray-900 mb-4 tracking-tight leading-tight group-hover:text-primary transition-colors">
+                                    <h4 className="text-xl font-black text-gray-900 mb-4 tracking-tight leading-tight group-hover:text-primary transition-colors">
                                         {intern.title}
                                     </h4>
-                                    <p className="text-gray-500 text-xs font-medium leading-relaxed">
+                                    <p className="text-gray-500 text-xs font-medium leading-relaxed mb-8 line-clamp-3">
                                         {intern.description}
                                     </p>
+                                    <button className="mt-auto text-xs font-black uppercase tracking-widest text-black border-b-2 border-transparent group-hover:border-black transition-all w-max">
+                                        View details
+                                    </button>
                                 </div>
                             </motion.div>
                         ))}
@@ -144,16 +157,17 @@ const Achievements = () => {
                         <div className="h-[1px] flex-1 bg-gray-100 hidden sm:block" />
                     </div>
 
-                    <div className="grid gap-6 sm:grid-cols-3">
+                    {/* Horizontal Scroll Container */}
+                    <div className="flex overflow-x-auto pb-8 -mx-6 px-6 sm:mx-0 sm:px-0 gap-6 snap-x hide-scrollbar">
                         {hackathons.map((hack, index) => (
                             <motion.div
                                 key={index}
-                                initial={{ opacity: 0, scale: 0.95 }}
-                                whileInView={{ opacity: 1, scale: 1 }}
-                                viewport={{ once: true }}
+                                initial={{ opacity: 0, x: 50 }}
+                                whileInView={{ opacity: 1, x: 0 }}
+                                viewport={{ once: false }}
                                 transition={{ duration: 0.5, delay: index * 0.1 }}
                                 onClick={() => setSelectedEvent(hack)}
-                                className="group cursor-pointer bg-white rounded-[2rem] p-8 border border-gray-100 hover:border-black transition-all duration-500 flex flex-col items-center text-center hover:shadow-xl"
+                                className="group shrink-0 w-[80vw] sm:w-[350px] snap-center cursor-pointer bg-white rounded-[2rem] p-8 border border-gray-100 hover:border-black transition-all duration-500 flex flex-col items-center text-center hover:shadow-xl"
                             >
                                 <div className="w-16 h-16 rounded-[1.5rem] bg-black flex items-center justify-center text-white mb-6 group-hover:scale-110 transition-transform duration-500 shadow-lg shadow-black/10">
                                     <svg className="w-8 h-8" fill="none" stroke="currentColor" viewBox="0 0 24 24">

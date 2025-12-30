@@ -89,7 +89,7 @@ const Contact = () => {
                                 rel={method.href.startsWith('http') ? 'noopener noreferrer' : undefined}
                                 initial={{ opacity: 0, x: -20 }}
                                 whileInView={{ opacity: 1, x: 0 }}
-                                viewport={{ once: true }}
+                                viewport={{ once: false }}
                                 transition={{ duration: 0.5, delay: index * 0.1 }}
                                 className="group block bg-white rounded-[2rem] p-8 border border-gray-100 hover:border-black transition-all duration-500 hover:shadow-2xl"
                             >
@@ -116,7 +116,7 @@ const Contact = () => {
                     <motion.div
                         initial={{ opacity: 0, scale: 0.95 }}
                         whileInView={{ opacity: 1, scale: 1 }}
-                        viewport={{ once: true }}
+                        viewport={{ once: false }}
                         transition={{ duration: 0.6, delay: 0.2 }}
                         className="lg:w-2/3 bg-white rounded-[3rem] p-10 md:p-16 border border-gray-100 shadow-2xl relative overflow-hidden"
                     >

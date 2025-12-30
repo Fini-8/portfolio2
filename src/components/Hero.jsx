@@ -47,7 +47,8 @@ const Hero = () => {
                     {/* Floating Badge */}
                     <motion.div
                         initial={{ opacity: 0, scale: 0.9 }}
-                        animate={{ opacity: 1, scale: 1 }}
+                        whileInView={{ opacity: 1, scale: 1 }}
+                        viewport={{ once: false }}
                         transition={{ duration: 0.5 }}
                         className="mb-8 p-1 rounded-full bg-white border border-gray-100 shadow-sm inline-flex items-center gap-2 pr-4"
                     >
@@ -68,7 +69,8 @@ const Hero = () => {
                         {/* Profile Image with Advanced Frame */}
                         <motion.div
                             initial={{ opacity: 0, y: 30 }}
-                            animate={{ opacity: 1, y: 0 }}
+                            whileInView={{ opacity: 1, y: 0 }}
+                            viewport={{ once: false }}
                             transition={{ duration: 0.8, ease: [0.16, 1, 0.3, 1] }}
                             className="relative mb-8"
                         >
@@ -84,7 +86,7 @@ const Hero = () => {
                                 <div className="absolute inset-0 rounded-[2.5rem] md:rounded-[3.5rem] overflow-hidden bg-white shadow-2xl p-2 border border-white">
                                     <div className="w-full h-full rounded-[2rem] md:rounded-[3rem] overflow-hidden  transition-all duration-700 ease-in-out">
                                         <img
-                                            src="/profile.jpg"
+                                            src="/logo.png"
                                             alt="Syed Firas Peerzada"
                                             className="w-full h-full object-cover scale-110 hover:scale-100 transition-transform duration-700"
                                         />
@@ -99,7 +101,8 @@ const Hero = () => {
                         <div className="max-w-4xl">
                             <motion.h1
                                 initial={{ opacity: 0, y: 20 }}
-                                animate={{ opacity: 1, y: 0 }}
+                                whileInView={{ opacity: 1, y: 0 }}
+                                viewport={{ once: false }}
                                 transition={{ duration: 0.8, delay: 0.2 }}
                                 className="text-3xl md:text-5xl lg:text-6xl font-black text-gray-900 tracking-tighter mb-6 leading-[0.9]"
                             >
@@ -111,7 +114,8 @@ const Hero = () => {
 
                             <motion.div
                                 initial={{ opacity: 0 }}
-                                animate={{ opacity: 1 }}
+                                whileInView={{ opacity: 1 }}
+                                viewport={{ once: false }}
                                 transition={{ duration: 0.8, delay: 0.4 }}
                                 className="h-8 md:h-10 mb-4"
                             >
@@ -127,7 +131,8 @@ const Hero = () => {
 
                             <motion.p
                                 initial={{ opacity: 0, y: 20 }}
-                                animate={{ opacity: 1, y: 0 }}
+                                whileInView={{ opacity: 1, y: 0 }}
+                                viewport={{ once: false }}
                                 transition={{ duration: 0.8, delay: 0.6 }}
                                 className="text-sm md:text-base text-gray-500 max-w-2xl mx-auto mb-8 leading-relaxed font-medium"
                             >
@@ -140,7 +145,8 @@ const Hero = () => {
                         {/* CTA Buttons - Premium Minimalist */}
                         <motion.div
                             initial={{ opacity: 0, y: 20 }}
-                            animate={{ opacity: 1, y: 0 }}
+                            whileInView={{ opacity: 1, y: 0 }}
+                            viewport={{ once: false }}
                             transition={{ duration: 0.8, delay: 0.8 }}
                             className="flex flex-col sm:flex-row items-center gap-4"
                         >
