@@ -1,180 +1,208 @@
-import React, { useState } from 'react';
+import React, { useState, useRef } from 'react';
 import { motion } from 'framer-motion';
+import { FaEnvelope, FaGithub, FaLinkedin, FaTerminal } from 'react-icons/fa';
 
 const Contact = () => {
-  const [formState, setFormState] = useState({
-    name: '',
-    email: '',
-    message: ''
-  });
+  const containerRef = useRef(null);
+  const [formState, setFormState] = useState({ name: '', email: '', message: '' });
   const [status, setStatus] = useState(null); // 'sending', 'success', 'error'
 
   const handleSubmit = (e) => {
     e.preventDefault();
     setStatus('sending');
     
-    // Simulate network request
+    // Simulate high-tech encryption transmission delay
     setTimeout(() => {
       setStatus('success');
       setFormState({ name: '', email: '', message: '' });
-      
-      setTimeout(() => setStatus(null), 3000);
-    }, 1500);
+      setTimeout(() => setStatus(null), 3500);
+    }, 2000);
+  };
+
+  // Section 7 variants: slide in from LEFT
+  const sectionVariants = {
+    hidden: { 
+      opacity: 0, 
+      x: -150, 
+      filter: 'blur(10px)' 
+    },
+    visible: { 
+      opacity: 1, 
+      x: 0, 
+      filter: 'blur(0px)',
+      transition: { 
+        duration: 1.0, 
+        ease: [0.16, 1, 0.3, 1] 
+      }
+    }
   };
 
   return (
-    <section id="contact" className="py-32 relative">
-      <div className="max-w-7xl mx-auto px-6 md:px-12">
-        <div className="grid lg:grid-cols-2 gap-16 items-center">
-          
-          {/* Left Column: Comms Header & Links */}
-          <motion.div 
-            initial={{ opacity: 0, x: -50 }}
-            whileInView={{ opacity: 1, x: 0 }}
-            viewport={{ once: true }}
-            transition={{ duration: 0.8 }}
-          >
-            <span className="h-[2px] w-12 bg-[#E11D48] mb-4 block" />
-            <h2 className="text-5xl md:text-7xl font-display font-bold mb-6 leading-tight">
-              Send a <br />
-              <span className="text-gradient-red">Signal.</span>
-            </h2>
-            <p className="text-lg text-slate-400 mb-12 max-w-md">
-              My spider-sense is tingling. Looking for a premium web experience or just want to talk tech? Drop a line into the multiverse.
-            </p>
+    <section 
+      id="contact" 
+      ref={containerRef} 
+      className="py-32 relative bg-[#050505] overflow-hidden"
+    >
+      {/* Cyber Grid Background */}
+      <div className="absolute inset-0 hud-grid opacity-15" />
+      
+      {/* Subtle Electric Blue Ambient Light Spot (Left side glow) */}
+      <div className="absolute top-1/4 -left-48 w-96 h-96 bg-[#0066FF]/3 rounded-full blur-[100px] pointer-events-none" />
 
+      <div className="max-w-7xl mx-auto px-6 md:px-12 relative z-10">
+        
+        {/* Scroll reveal container - sliding in from LEFT */}
+        <motion.div
+          variants={sectionVariants}
+          initial="hidden"
+          whileInView="visible"
+          viewport={{ once: true, margin: "-120px" }}
+          className="grid lg:grid-cols-12 gap-16 items-center"
+        >
+          {/* Left Column: Comms Header & Social Uplinks */}
+          <div className="lg:col-span-5 space-y-8">
             <div className="space-y-6">
+              <div className="flex items-center gap-3">
+                <span className="h-[1.5px] w-8 bg-[#00E5FF] shadow-[0_0_8px_#00E5FF]" />
+                <span className="text-[#00E5FF] font-mono text-xs uppercase tracking-widest text-glow-cyan">SYS_SECTOR: 07 // COMMS</span>
+              </div>
+              
+              <h2 className="text-4xl sm:text-5xl font-display font-bold text-white leading-tight">
+                Open A <span className="bg-gradient-to-r from-[#0066FF] to-[#00E5FF] bg-clip-text text-transparent">Secure Channel.</span>
+              </h2>
+
+              <p className="text-sm text-slate-400 leading-relaxed font-light font-geist">
+                Establish a direct link to my headquarters terminal. Drop a message to discuss development, integrations, or contract details.
+              </p>
+            </div>
+
+            {/* Social details list */}
+            <div className="space-y-4">
               <a 
                 href="mailto:syedfiras06@gmail.com" 
-                className="group flex items-center gap-6 p-4 rounded-xl hover:bg-[#0F172A] transition-colors border border-transparent hover:border-slate-800"
+                className="flex items-center gap-5 p-4 rounded bg-[#111111]/30 border border-slate-900 hover:border-[#00E5FF]/40 hover:bg-[#111111]/60 transition-all duration-300 group"
               >
-                <div className="w-12 h-12 rounded-full border border-slate-700 flex items-center justify-center text-slate-400 group-hover:text-[#E11D48] group-hover:border-[#E11D48] transition-colors">
-                  <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
-                    <path d="M4 4h16c1.1 0 2 .9 2 2v12c0 1.1-.9 2-2 2H4c-1.1 0-2-.9-2-2V6c0-1.1.9-2 2-2z M22 6l-10 7L2 6" />
-                  </svg>
+                <div className="w-10 h-10 rounded border border-slate-800 bg-[#050505] flex items-center justify-center text-slate-500 group-hover:text-[#00E5FF] transition-colors duration-300">
+                  <FaEnvelope size={14} />
                 </div>
                 <div>
-                  <div className="text-xs font-mono text-slate-500 mb-1">EMAIL UPLINK</div>
-                  <div className="text-slate-200 font-medium group-hover:text-white transition-colors">syedfiras06@gmail.com</div>
+                  <div className="text-[8px] font-mono text-slate-500 uppercase tracking-widest">EMAIL UPLINK</div>
+                  <div className="text-sm font-display font-bold text-white group-hover:text-[#00E5FF] transition-colors font-mono">syedfiras06@gmail.com</div>
                 </div>
               </a>
 
               <a 
                 href="https://github.com/syedfiras" 
                 target="_blank"
-                rel="noopener noreferrer"
-                className="group flex items-center gap-6 p-4 rounded-xl hover:bg-[#0F172A] transition-colors border border-transparent hover:border-slate-800"
+                rel="noreferrer"
+                className="flex items-center gap-5 p-4 rounded bg-[#111111]/30 border border-slate-900 hover:border-[#0066FF]/40 hover:bg-[#111111]/60 transition-all duration-300 group"
               >
-                <div className="w-12 h-12 rounded-full border border-slate-700 flex items-center justify-center text-slate-400 group-hover:text-[#E11D48] group-hover:border-[#E11D48] transition-colors">
-                  <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
-                    <path d="M9 19c-5 1.5-5-2.5-7-3m14 6v-3.87a3.37 3.37 0 0 0-.94-2.61c3.14-.35 6.44-1.54 6.44-7A5.44 5.44 0 0 0 20 4.77 5.07 5.07 0 0 0 19.91 1S18.73.65 16 2.48a13.38 13.38 0 0 0-7 0C6.27.65 5.09 1 5.09 1A5.07 5.07 0 0 0 5 4.77a5.44 5.44 0 0 0-1.5 3.78c0 5.42 3.3 6.61 6.44 7A3.37 3.37 0 0 0 9 18.13V22" />
-                  </svg>
+                <div className="w-10 h-10 rounded border border-slate-800 bg-[#050505] flex items-center justify-center text-slate-500 group-hover:text-[#0066FF] transition-colors duration-300">
+                  <FaGithub size={14} />
                 </div>
                 <div>
-                  <div className="text-xs font-mono text-slate-500 mb-1">GITHUB REPO</div>
-                  <div className="text-slate-200 font-medium group-hover:text-white transition-colors">github.com/syedfiras</div>
+                  <div className="text-[8px] font-mono text-slate-500 uppercase tracking-widest">GITHUB PROTOCOL</div>
+                  <div className="text-sm font-display font-bold text-white group-hover:text-[#0066FF] transition-colors font-mono">github.com/syedfiras</div>
                 </div>
               </a>
 
               <a 
                 href="https://linkedin.com/in/syedfiras7" 
                 target="_blank"
-                rel="noopener noreferrer"
-                className="group flex items-center gap-6 p-4 rounded-xl hover:bg-[#0F172A] transition-colors border border-transparent hover:border-slate-800"
+                rel="noreferrer"
+                className="flex items-center gap-5 p-4 rounded bg-[#111111]/30 border border-slate-900 hover:border-[#00E5FF]/40 hover:bg-[#111111]/60 transition-all duration-300 group"
               >
-                <div className="w-12 h-12 rounded-full border border-slate-700 flex items-center justify-center text-slate-400 group-hover:text-[#E11D48] group-hover:border-[#E11D48] transition-colors">
-                  <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
-                    <path d="M16 8a6 6 0 0 1 6 6v7h-4v-7a2 2 0 0 0-2-2 2 2 0 0 0-2 2v7h-4v-7a6 6 0 0 1 6-6z M2 9h4v12H2z M4 2a2 2 0 1 1-2 2 2 2 0 0 1 2-2z" />
-                  </svg>
+                <div className="w-10 h-10 rounded border border-slate-800 bg-[#050505] flex items-center justify-center text-slate-500 group-hover:text-[#00E5FF] transition-colors duration-300">
+                  <FaLinkedin size={14} />
                 </div>
                 <div>
-                  <div className="text-xs font-mono text-slate-500 mb-1">LINKEDIN NETWORK</div>
-                  <div className="text-slate-200 font-medium group-hover:text-white transition-colors">linkedin.com/in/syedfiras7</div>
+                  <div className="text-[8px] font-mono text-slate-500 uppercase tracking-widest">LINKEDIN NETWORK</div>
+                  <div className="text-sm font-display font-bold text-white group-hover:text-[#00E5FF] transition-colors font-mono">linkedin.com/in/syedfiras7</div>
                 </div>
               </a>
             </div>
-          </motion.div>
+          </div>
 
-          {/* Right Column: Terminal Form */}
-          <motion.div
-            initial={{ opacity: 0, y: 50 }}
-            whileInView={{ opacity: 1, y: 0 }}
-            viewport={{ once: true }}
-            transition={{ duration: 0.8, delay: 0.2 }}
-          >
-            <div className="glass-panel-glow rounded-2xl p-8 relative overflow-hidden border-t-2 border-[#E11D48]">
-              {/* Terminal Header */}
-              <div className="flex items-center gap-2 mb-8 border-b border-slate-800 pb-4">
-                <div className="w-3 h-3 rounded-full bg-[#E11D48]" />
-                <div className="w-3 h-3 rounded-full bg-[#EAB308]" />
-                <div className="w-3 h-3 rounded-full bg-[#22C55E]" />
-                <span className="ml-4 font-mono text-xs text-slate-500 uppercase tracking-widest">Secure_Transmission_Link</span>
+          {/* Right Column: Secure Comms Terminal Form */}
+          <div className="lg:col-span-7">
+            <div className="glass-panel-glow rounded-xl p-6 sm:p-8 border border-[#00E5FF]/10 shadow-2xl relative bg-[#111111]/90">
+              
+              {/* Terminal window bar */}
+              <div className="flex items-center gap-2 mb-8 border-b border-slate-900 pb-4 justify-between font-mono text-[9px] text-slate-500">
+                <div className="flex items-center gap-2">
+                  <div className="w-2.5 h-2.5 rounded-full bg-[#00E5FF] animate-pulse" />
+                  <span className="uppercase tracking-widest">comms_uplink_shell.sh</span>
+                </div>
+                <span>STATUS: SECURED_CHANNEL</span>
               </div>
 
+              {/* High-tech terminal form inputs */}
               <form onSubmit={handleSubmit} className="space-y-6">
-                <div className="relative group">
-                  <input 
-                    type="text" 
-                    id="name"
-                    required
-                    value={formState.name}
-                    onChange={(e) => setFormState({...formState, name: e.target.value})}
-                    className="w-full bg-transparent border-b border-slate-700 py-3 text-white focus:outline-none focus:border-[#60A5FA] transition-colors peer placeholder-transparent"
-                    placeholder="Name"
-                  />
-                  <label htmlFor="name" className="absolute left-0 top-3 text-slate-500 font-mono text-sm transition-all peer-focus:-top-4 peer-focus:text-xs peer-focus:text-[#60A5FA] peer-valid:-top-4 peer-valid:text-xs">
-                    [IDENTIFIER_STRING]
-                  </label>
+                <div className="relative group font-mono text-xs">
+                  <div className="flex items-center gap-2 border-b border-slate-900 focus-within:border-[#00E5FF] py-3.5 transition-colors">
+                    <span className="text-[#0066FF] select-none">❯</span>
+                    <span className="text-slate-500 select-none">ident_name:</span>
+                    <input 
+                      type="text" 
+                      required
+                      value={formState.name}
+                      onChange={(e) => setFormState({...formState, name: e.target.value})}
+                      className="flex-1 bg-transparent text-white focus:outline-none placeholder-slate-700"
+                      placeholder="ENTER_NAME"
+                    />
+                  </div>
                 </div>
 
-                <div className="relative group">
-                  <input 
-                    type="email" 
-                    id="email"
-                    required
-                    value={formState.email}
-                    onChange={(e) => setFormState({...formState, email: e.target.value})}
-                    className="w-full bg-transparent border-b border-slate-700 py-3 text-white focus:outline-none focus:border-[#60A5FA] transition-colors peer placeholder-transparent"
-                    placeholder="Email"
-                  />
-                  <label htmlFor="email" className="absolute left-0 top-3 text-slate-500 font-mono text-sm transition-all peer-focus:-top-4 peer-focus:text-xs peer-focus:text-[#60A5FA] peer-valid:-top-4 peer-valid:text-xs">
-                    [RETURN_ADDRESS]
-                  </label>
+                <div className="relative group font-mono text-xs">
+                  <div className="flex items-center gap-2 border-b border-slate-900 focus-within:border-[#00E5FF] py-3.5 transition-colors">
+                    <span className="text-[#0066FF] select-none">❯</span>
+                    <span className="text-slate-500 select-none">return_addr:</span>
+                    <input 
+                      type="email" 
+                      required
+                      value={formState.email}
+                      onChange={(e) => setFormState({...formState, email: e.target.value})}
+                      className="flex-1 bg-transparent text-white focus:outline-none placeholder-slate-700"
+                      placeholder="ENTER_EMAIL"
+                    />
+                  </div>
                 </div>
 
-                <div className="relative group pt-4">
+                <div className="relative group font-mono text-xs">
+                  <span className="text-slate-500 select-none block mb-2 font-mono">❯ transmission_payload:</span>
                   <textarea 
-                    id="message"
                     required
                     rows={4}
                     value={formState.message}
                     onChange={(e) => setFormState({...formState, message: e.target.value})}
-                    className="w-full bg-[#0F172A] border border-slate-700 rounded-lg p-4 text-white focus:outline-none focus:border-[#E11D48] transition-colors resize-none placeholder-slate-600 font-mono text-sm"
-                    placeholder="> TYPE_TRANSMISSION_HERE_"
+                    className="w-full bg-[#050505] border border-slate-900 rounded p-4 text-white focus:outline-none focus:border-[#00E5FF] transition-colors resize-none placeholder-slate-700"
+                    placeholder="> WRITE_SECURE_TRANSMISSION_PAYLOAD_HERE_"
                   />
                 </div>
 
+                {/* Submitting state button */}
                 <button 
                   type="submit" 
                   disabled={status === 'sending' || status === 'success'}
-                  className="w-full py-4 rounded-lg font-bold tracking-widest uppercase transition-all flex items-center justify-center gap-3 relative overflow-hidden group border border-[#E11D48]/50 disabled:opacity-80 disabled:cursor-not-allowed"
+                  className="w-full py-4 rounded border font-mono text-xs font-bold uppercase tracking-widest transition-all duration-300 flex items-center justify-center gap-3 bg-[#050505] border-[#00E5FF]/20 text-[#00E5FF] hover:bg-[#00E5FF] hover:text-black hover:shadow-[0_0_20px_rgba(0,229,255,0.35)] disabled:opacity-50 disabled:cursor-not-allowed cursor-pointer"
                 >
-                  <div className="absolute inset-0 bg-[#E11D48] translate-y-[100%] group-hover:translate-y-0 transition-transform duration-300 ease-out" />
-                  
-                  <span className="relative z-10 flex items-center gap-2 group-hover:text-white" style={{ color: status === 'success' ? '#22C55E' : '#E11D48' }}>
-                    {status === 'sending' ? (
-                      <><div className="w-4 h-4 border-2 border-current border-t-transparent rounded-full animate-spin" /> ENCRYPTING...</>
-                    ) : status === 'success' ? (
-                      <><svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="3"><polyline points="20 6 9 17 4 12"/></svg> TRANSMITTED</>
-                    ) : (
-                      <>INITIATE TRANSFER</>
-                    )}
-                  </span>
+                  {status === 'sending' ? (
+                    <>
+                      <div className="w-3.5 h-3.5 border-2 border-current border-t-transparent rounded-full animate-spin" />
+                      <span>UPLINK_ENCRYPTING...</span>
+                    </>
+                  ) : status === 'success' ? (
+                    <span className="text-[#27C93F] font-bold flex items-center gap-2">
+                      ✔ PAYLOAD_TRANSMITTED_SUCCESS
+                    </span>
+                  ) : (
+                    <span>INITIATE_TRANSFER_HANDSHAKE</span>
+                  )}
                 </button>
               </form>
             </div>
-          </motion.div>
-        </div>
+          </div>
+        </motion.div>
       </div>
     </section>
   );

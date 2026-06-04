@@ -1,375 +1,313 @@
-import React, { useRef, useEffect } from 'react';
-import { motion } from 'framer-motion';
+import React, { useRef, useEffect, useState } from 'react';
+import { motion, AnimatePresence } from 'framer-motion';
+import { FaGithub, FaLinkedin, FaFileDownload, FaNetworkWired } from 'react-icons/fa';
 
 const Hero = () => {
   const containerRef = useRef(null);
+  const [mousePos, setMousePos] = useState({ x: 0, y: 0 });
+  const [activeCodeLine, setActiveCodeLine] = useState(0);
 
-  // Subtle Parallax on mouse move
+  // Mouse coordinate tracking for interactive light glows
   useEffect(() => {
-    let rafId;
-    let targetX = 0;
-    let targetY = 0;
-    let currentX = 0;
-    let currentY = 0;
-
     const handleMouseMove = (e) => {
-      const { clientX, clientY } = e;
-      targetX = (clientX / window.innerWidth - 0.5) * 20;
-      targetY = (clientY / window.innerHeight - 0.5) * 20;
-    };
-
-    const animate = () => {
-      currentX += (targetX - currentX) * 0.1;
-      currentY += (targetY - currentY) * 0.1;
-      
-      const layer = document.querySelector(".parallax-layer");
-      const bgLayer = document.querySelector(".parallax-layer-bg");
-      
-      if (layer) {
-        layer.style.transform = `translate(${currentX}px, ${currentY}px)`;
-      }
-      if (bgLayer) {
-        bgLayer.style.transform = `translate(${-currentX * 1.5}px, ${-currentY * 1.5}px)`;
-      }
-      
-      rafId = requestAnimationFrame(animate);
+      if (!containerRef.current) return;
+      const rect = containerRef.current.getBoundingClientRect();
+      setMousePos({
+        x: e.clientX - rect.left,
+        y: e.clientY - rect.top
+      });
     };
 
     window.addEventListener("mousemove", handleMouseMove);
-    rafId = requestAnimationFrame(animate);
-    
-    return () => {
-      window.removeEventListener("mousemove", handleMouseMove);
-      if (rafId) cancelAnimationFrame(rafId);
-    };
+    return () => window.removeEventListener("mousemove", handleMouseMove);
+  }, []);
+
+  // Simulate typing line triggers inside code terminal
+  useEffect(() => {
+    const timer = setInterval(() => {
+      setActiveCodeLine((prev) => (prev < 8 ? prev + 1 : prev));
+    }, 400);
+    return () => clearInterval(timer);
   }, []);
 
   const particles = React.useMemo(() => {
-    return [...Array(30)].map((_, i) => ({ id: i }));
+    return [...Array(25)].map((_, i) => ({
+      id: i,
+      left: `${Math.random() * 100}%`,
+      top: `${Math.random() * 100}%`,
+      size: Math.random() * 2 + 1,
+      delay: Math.random() * 5,
+      duration: 5 + Math.random() * 5
+    }));
   }, []);
 
   return (
     <section 
       id="home" 
       ref={containerRef}
-      className="relative min-h-screen flex items-center justify-center overflow-hidden pt-20"
+      className="relative min-h-screen flex items-center justify-center overflow-hidden pt-24 pb-16 bg-[#050505]"
     >
-      {/* Background - No gradients */}
-      <div className="absolute inset-0 z-0">
-        <div className="absolute inset-0 bg-[#020617]" />
-        
-        {/* Spider web grid */}
-        <div className="absolute inset-0 opacity-20">
-          <div 
-            className="w-full h-full bg-repeat"
-            style={{
-              backgroundImage: `url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='80' height='80'%3E%3Cpath d='M40 0 L40 80 M0 40 L80 40 M0 0 L80 80 M80 0 L0 80' stroke='%23E11D48' stroke-width='0.5' fill='none' opacity='0.3'/%3E%3Ccircle cx='40' cy='40' r='15' stroke='%232563EB' stroke-width='0.3' fill='none'/%3E%3C/svg%3E")`
-            }}
-          />
-        </div>
+      {/* Interactive Laser Glow Spot following Cursor */}
+      <div 
+        className="absolute hidden md:block w-[500px] h-[500px] rounded-full pointer-events-none opacity-20 blur-[120px] transition-all duration-300 z-0 bg-[radial-gradient(circle,rgba(0,229,255,0.4)_0%,rgba(0,102,255,0.1)_50%,transparent_100%)]"
+        style={{
+          left: `${mousePos.x - 250}px`,
+          top: `${mousePos.y - 250}px`,
+        }}
+      />
 
-        {/* Solid color orbs - no gradients */}
-        <div className="absolute top-20 left-20 w-[400px] h-[400px] rounded-full bg-[#E11D48]/5 blur-[100px]" />
-        <div className="absolute bottom-20 right-20 w-[500px] h-[500px] rounded-full bg-[#2563EB]/5 blur-[120px]" />
-        
-        {/* Floating particles */}
-        {particles.map((_, i) => (
-          <div
-            key={`particle-${i}`}
-            className="absolute w-0.5 h-0.5 bg-[#E11D48] rounded-full"
+      {/* Cyber Grid Overlay */}
+      <div className="absolute inset-0 hud-grid opacity-25 z-0" />
+      
+      {/* Floating Particles Background */}
+      <div className="absolute inset-0 overflow-hidden pointer-events-none z-0">
+        {particles.map((p) => (
+          <motion.div
+            key={`particle-${p.id}`}
+            className="absolute bg-[#00E5FF] rounded-full opacity-30"
             style={{
-              left: `${Math.random() * 100}%`,
-              top: `${Math.random() * 100}%`,
-              animation: `float ${3 + Math.random() * 5}s linear infinite`,
-              animationDelay: `${Math.random() * 5}s`,
-              opacity: 0,
+              left: p.left,
+              top: p.top,
+              width: p.size,
+              height: p.size,
+            }}
+            animate={{
+              y: [0, -120, -250],
+              opacity: [0, 0.6, 0],
+              scale: [1, 1.5, 0.8]
+            }}
+            transition={{
+              duration: p.duration,
+              repeat: Infinity,
+              delay: p.delay,
+              ease: "linear"
             }}
           />
         ))}
       </div>
 
-      <div className="container mx-auto px-6 md:px-12 relative z-10 grid md:grid-cols-2 gap-12 items-center">
-        {/* Left Side */}
-        <div className="parallax-layer flex flex-col items-start space-y-6">
+      <div className="max-w-7xl mx-auto px-6 md:px-12 relative z-10 w-full grid lg:grid-cols-12 gap-12 items-center">
+        {/* Left Column: Headline and Actions */}
+        <div className="lg:col-span-7 flex flex-col items-start space-y-6">
+          {/* Holographic Status Node */}
           <motion.div 
-            initial={{ opacity: 0, y: 20 }}
+            initial={{ opacity: 0, y: 15 }}
             animate={{ opacity: 1, y: 0 }}
             transition={{ duration: 0.6 }}
-            className="inline-flex items-center gap-2 px-4 py-2 rounded-full border border-[#E11D48]/50 bg-[#E11D48]/10 text-sm text-[#E11D48] backdrop-blur-sm"
+            className="inline-flex items-center gap-2.5 px-4 py-1.5 rounded border border-[#00E5FF]/20 bg-[#111111]/80 text-xs font-mono text-[#00E5FF] backdrop-blur-md text-glow-cyan"
           >
             <span className="relative flex h-2 w-2">
-              <span className="animate-ping absolute inline-flex h-full w-full rounded-full bg-[#E11D48] opacity-75"></span>
-              <span className="relative inline-flex rounded-full h-2 w-2 bg-[#E11D48]"></span>
+              <span className="animate-ping absolute inline-flex h-full w-full rounded-full bg-[#00E5FF] opacity-75"></span>
+              <span className="relative inline-flex rounded-full h-2 w-2 bg-[#00E5FF]"></span>
             </span>
-            Spider-Sense Active — Web Weaver Status
+            <span>HQ_STATUS: SECURE_UPLINK // ONLINE</span>
           </motion.div>
 
+          {/* Large Bold Headline */}
           <motion.h1 
-            initial={{ opacity: 0, y: 30 }}
+            initial={{ opacity: 0, y: 25 }}
             animate={{ opacity: 1, y: 0 }}
             transition={{ duration: 0.6, delay: 0.1 }}
-            className="text-5xl md:text-7xl font-display font-bold leading-tight"
+            className="text-4xl sm:text-5xl md:text-6xl font-display font-bold leading-[1.08] text-white tracking-tight"
           >
-            Your Friendly
+            Building Mobile Apps,
             <br />
-            Neighborhood
+            Web Platforms
             <br />
-            <span className="text-[#E11D48]">
-              Web Developer
+            <span className="bg-gradient-to-r from-[#0066FF] to-[#00E5FF] bg-clip-text text-transparent">
+              & AI Experiences.
             </span>
           </motion.h1>
 
+          {/* Subheadline description */}
           <motion.p 
             initial={{ opacity: 0 }}
             animate={{ opacity: 1 }}
             transition={{ duration: 0.6, delay: 0.2 }}
-            className="text-lg md:text-xl text-slate-400 max-w-md leading-relaxed"
+            className="text-base sm:text-lg text-slate-400 max-w-xl leading-relaxed font-light"
           >
-            Swinging through the digital multiverse, crafting cinematic web experiences with great power comes great performance.
+            I design and develop modern digital products using React Native, React, Node.js, Supabase, and AI integrations. Engineered for high performance and sleek luxury aesthetics.
           </motion.p>
 
+          {/* Premium Call to Action Buttons */}
           <motion.div 
-            initial={{ opacity: 0, y: 20 }}
+            initial={{ opacity: 0, y: 15 }}
             animate={{ opacity: 1, y: 0 }}
             transition={{ duration: 0.6, delay: 0.3 }}
-            className="flex flex-wrap items-center gap-4 pt-4"
+            className="flex flex-wrap items-center gap-4 pt-3 w-full sm:w-auto"
           >
-            <a href="#projects" className="group relative px-8 py-3 rounded-lg bg-[#E11D48] text-white font-bold overflow-hidden transition-all hover:shadow-[0_0_30px_rgba(225,29,72,0.6)] hover:-translate-y-1">
-              <span className="relative z-10">View Web-Slinging</span>
-              <div className="absolute inset-0 bg-[#ff2a5f] transform scale-x-0 group-hover:scale-x-100 transition-transform origin-left" />
+            <a 
+              href="#contact" 
+              onClick={(e) => {
+                e.preventDefault();
+                document.querySelector('#contact')?.scrollIntoView({ behavior: 'smooth' });
+              }}
+              className="w-full sm:w-auto text-center px-8 py-3.5 rounded border border-[#0066FF] bg-[#0066FF]/10 text-white font-mono text-xs font-bold uppercase tracking-wider hover:bg-[#0066FF] hover:shadow-[0_0_25px_rgba(0,102,255,0.4)] transition-all duration-300"
+            >
+              SECURE_COMMUNICATION
             </a>
-            <a href="#contact" className="px-8 py-3 rounded-lg border-2 border-[#2563EB] text-[#2563EB] hover:bg-[#2563EB] hover:text-white transition-all hover:-translate-y-1 font-medium">
-              Contact the Web
+            
+            <a 
+              href="#" // downloads resume
+              className="w-full sm:w-auto text-center px-8 py-3.5 rounded border border-slate-800 bg-[#111111]/50 text-slate-300 font-mono text-xs font-bold uppercase tracking-wider hover:border-slate-500 hover:text-white transition-all duration-300 flex items-center justify-center gap-2"
+            >
+              <FaFileDownload />
+              RESUME_DAT
             </a>
           </motion.div>
 
-          {/* Spider-Verse stats */}
+          {/* Social connections HUD bar */}
           <motion.div 
             initial={{ opacity: 0 }}
-            animate={{ opacity: 1 }}
+            animate={{ opacity: 0.7 }}
             transition={{ duration: 0.6, delay: 0.4 }}
-            className="flex gap-6 pt-6"
+            className="flex items-center gap-6 pt-6 border-t border-slate-900 w-full max-w-md"
           >
-            <div className="text-center">
-              <div className="text-2xl font-bold text-[#E11D48]">20+</div>
-              <div className="text-xs text-slate-500 font-mono">Webs Weaved</div>
+            <span className="text-[10px] font-mono text-slate-500 uppercase tracking-widest">Connect:</span>
+            <div className="flex items-center gap-4">
+              <a 
+                href="https://github.com/syedfiras" 
+                target="_blank" 
+                rel="noreferrer" 
+                className="text-slate-400 hover:text-[#00E5FF] transition-colors"
+                title="GitHub"
+              >
+                <FaGithub size={18} />
+              </a>
+              <a 
+                href="https://www.linkedin.com/in/syedfiras7" 
+                target="_blank" 
+                rel="noreferrer" 
+                className="text-slate-400 hover:text-[#0066FF] transition-colors"
+                title="LinkedIn"
+              >
+                <FaLinkedin size={18} />
+              </a>
             </div>
-            <div className="text-center">
-              <div className="text-2xl font-bold text-[#2563EB]">100%</div>
-              <div className="text-xs text-slate-500 font-mono">Spider-Sense</div>
+            <div className="h-1 flex-1 bg-slate-950 rounded-full overflow-hidden relative">
+              <div className="absolute left-0 top-0 h-full w-[80%] bg-[#00E5FF]/40 rounded-full" />
             </div>
-            <div className="text-center">
-              <div className="text-2xl font-bold text-[#60A5FA]">24/7</div>
-              <div className="text-xs text-slate-500 font-mono">On Patrol</div>
-            </div>
+            <span className="text-[9px] font-mono text-[#00E5FF]/60 font-bold">NODE_CONNECT</span>
           </motion.div>
         </div>
 
-        {/* Right Side - Code Editor */}
+        {/* Right Column: Cybernetic Console Terminal */}
         <motion.div 
-          initial={{ opacity: 0, scale: 0.9 }}
+          initial={{ opacity: 0, scale: 0.95 }}
           animate={{ opacity: 1, scale: 1 }}
           transition={{ duration: 0.8, delay: 0.2 }}
-          className="hidden md:flex justify-center parallax-layer-bg relative items-center"
+          className="lg:col-span-5 relative w-full flex justify-center"
         >
-          <div className="relative z-10 w-full max-w-md">
-            {/* Code editor */}
-            <div className="glass-panel-glow rounded-2xl p-6 backdrop-blur-xl border border-[#E11D48]/30 shadow-2xl bg-[#0A0F2A]">
-              {/* Window controls */}
-              <div className="flex items-center gap-2 mb-6 pb-3 border-b border-slate-700">
-                <div className="w-3 h-3 rounded-full bg-[#E11D48]" />
-                <div className="w-3 h-3 rounded-full bg-[#EAB308]" />
-                <div className="w-3 h-3 rounded-full bg-[#22C55E]" />
-                <div className="ml-2 flex items-center gap-2">
-                  <svg width="12" height="12" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
-                    <path d="M12 2L13.5 8L19 9L15 13L16 19L12 16L8 19L9 13L5 9L10.5 8L12 2Z" fill="#E11D48" />
-                  </svg>
-                  <span className="text-xs text-slate-500 font-mono">spider-sense.tsx</span>
-                </div>
+          {/* Main Terminal Frame */}
+          <div className="relative w-full max-w-md glass-panel-glow rounded-xl p-5 border border-[#00E5FF]/20 shadow-2xl bg-[#111111]/90">
+            {/* Header window control buttons */}
+            <div className="flex items-center justify-between pb-3.5 mb-4 border-b border-slate-800">
+              <div className="flex items-center gap-2">
+                <div className="w-2.5 h-2.5 rounded-full bg-[#FF5F56]" />
+                <div className="w-2.5 h-2.5 rounded-full bg-[#FFBD2E]" />
+                <div className="w-2.5 h-2.5 rounded-full bg-[#27C93F]" />
               </div>
-              
-              {/* Code lines */}
-              <div className="space-y-2 font-mono text-sm">
-                <motion.div 
-                  initial={{ opacity: 0, x: -20 }}
-                  animate={{ opacity: 1, x: 0 }}
-                  transition={{ delay: 0.5 }}
-                  className="flex items-center gap-3"
-                >
-                  <span className="text-[#E11D48]">1</span>
-                  <span className="text-[#60A5FA]">const</span>
-                  <span className="text-[#EAB308]"> spiderSense</span>
-                  <span className="text-white"> = </span>
-                  <span className="text-[#EAB308]">active</span>
-                  <span className="text-white">;</span>
-                </motion.div>
-                
-                <motion.div 
-                  initial={{ opacity: 0, x: -20 }}
-                  animate={{ opacity: 1, x: 0 }}
-                  transition={{ delay: 0.6 }}
-                  className="flex items-center gap-3"
-                >
-                  <span className="text-[#E11D48]">2</span>
-                  <span className="text-[#60A5FA]">function</span>
-                  <span className="text-[#EAB308]"> WebSlinger</span>
-                  <span className="text-white">() {'{'}</span>
-                </motion.div>
-                
-                <motion.div 
-                  initial={{ opacity: 0, x: -20 }}
-                  animate={{ opacity: 1, x: 0 }}
-                  transition={{ delay: 0.7 }}
-                  className="flex items-center gap-3 pl-4"
-                >
-                  <span className="text-[#E11D48]">3</span>
-                  <span className="text-[#60A5FA]">return</span>
-                  <span className="text-white"> (</span>
-                </motion.div>
-                
-                <motion.div 
-                  initial={{ opacity: 0, x: -20 }}
-                  animate={{ opacity: 1, x: 0 }}
-                  transition={{ delay: 0.8 }}
-                  className="flex items-center gap-3 pl-8"
-                >
-                  <span className="text-[#E11D48]">4</span>
-                  <span className="text-white">{'<div className="web-swinging">'}</span>
-                </motion.div>
-                
-                <motion.div 
-                  initial={{ opacity: 0, x: -20 }}
-                  animate={{ opacity: 1, x: 0 }}
-                  transition={{ delay: 0.9 }}
-                  className="flex items-center gap-3 pl-12"
-                >
-                  <span className="text-[#E11D48]">5</span>
-                  <span className="text-white">Building awesome </span>
-                  <span className="text-[#EAB308] animate-pulse">websites</span>
-                </motion.div>
-                
-                <motion.div 
-                  initial={{ opacity: 0, x: -20 }}
-                  animate={{ opacity: 1, x: 0 }}
-                  transition={{ delay: 1.0 }}
-                  className="flex items-center gap-3 pl-8"
-                >
-                  <span className="text-[#E11D48]">6</span>
-                  <span className="text-white">{'</div>'}</span>
-                </motion.div>
-                
-                <motion.div 
-                  initial={{ opacity: 0, x: -20 }}
-                  animate={{ opacity: 1, x: 0 }}
-                  transition={{ delay: 1.1 }}
-                  className="flex items-center gap-3 pl-4"
-                >
-                  <span className="text-[#E11D48]">7</span>
-                  <span className="text-white"> );</span>
-                </motion.div>
-                
-                <motion.div 
-                  initial={{ opacity: 0, x: -20 }}
-                  animate={{ opacity: 1, x: 0 }}
-                  transition={{ delay: 1.2 }}
-                  className="flex items-center gap-3"
-                >
-                  <span className="text-[#E11D48]">8</span>
-                  <span className="text-white">{'}'}</span>
-                </motion.div>
-
-                <motion.div 
-                  initial={{ opacity: 0, x: -20 }}
-                  animate={{ opacity: 1, x: 0 }}
-                  transition={{ delay: 1.3 }}
-                  className="flex items-center gap-3"
-                >
-                  <span className="text-[#E11D48]">9</span>
-                  <span className="text-white">WebSlinger</span>
-                  <span className="text-white">();</span>
-                </motion.div>
-
-                {/* Blinking cursor */}
-                <motion.div 
-                  className="flex items-center gap-3"
-                  initial={{ opacity: 0 }}
-                  animate={{ opacity: 1 }}
-                  transition={{ delay: 1.4 }}
-                >
-                  <span className="text-[#E11D48]">10</span>
-                  <span className="w-2 h-4 bg-[#E11D48] animate-blink" />
-                </motion.div>
+              <div className="flex items-center gap-1.5 text-[10px] font-mono text-slate-500">
+                <FaNetworkWired size={10} className="text-[#00E5FF]" />
+                <span>firas_hq_terminal.js</span>
               </div>
             </div>
 
-            {/* Floating panels */}
-            <motion.div 
-              className="absolute -top-4 -right-4 glass-panel-glow px-3 py-2 rounded-lg text-xs font-mono z-20"
-              animate={{ y: [0, -8, 0], rotate: [0, 2, 0] }}
-              transition={{ duration: 3, repeat: Infinity }}
-            >
-              <div className="text-[#E11D48]">🕷️ SPIDER-SENSE</div>
-              <div className="text-white font-bold">TINGLING</div>
-            </motion.div>
-            
-            <motion.div 
-              className="absolute -bottom-4 -left-4 glass-panel px-3 py-2 rounded-lg text-xs font-mono z-20"
-              animate={{ y: [0, 8, 0], rotate: [0, -2, 0] }}
-              transition={{ duration: 3, repeat: Infinity, delay: 1 }}
-            >
-              <div className="text-[#60A5FA]">WEB ACTIVE</div>
-              <div className="text-white font-bold">SWINGING</div>
-            </motion.div>
+            {/* Typewriter Code Block */}
+            <div className="space-y-2 font-mono text-xs text-slate-300 min-h-[220px]">
+              {activeCodeLine >= 0 && (
+                <div className="flex gap-3">
+                  <span className="text-slate-600 select-none text-[10px]">01</span>
+                  <span><span className="text-[#00E5FF]">import</span> Supabase <span className="text-[#00E5FF]">from</span> <span className="text-emerald-500">'supabase'</span>;</span>
+                </div>
+              )}
+              {activeCodeLine >= 1 && (
+                <div className="flex gap-3">
+                  <span className="text-slate-600 select-none text-[10px]">02</span>
+                  <span><span className="text-[#00E5FF]">import</span> OpenAI <span className="text-[#00E5FF]">from</span> <span className="text-emerald-500">'openai'</span>;</span>
+                </div>
+              )}
+              {activeCodeLine >= 2 && (
+                <div className="flex gap-3">
+                  <span className="text-slate-600 select-none text-[10px]">03</span>
+                  <span><span className="text-[#0066FF]">const</span> <span className="text-yellow-400">devProfile</span> = {'{'}</span>
+                </div>
+              )}
+              {activeCodeLine >= 3 && (
+                <div className="flex gap-3 pl-4">
+                  <span className="text-slate-600 select-none text-[10px]">04</span>
+                  <span>name: <span className="text-emerald-500">'Syed Firas'</span>,</span>
+                </div>
+              )}
+              {activeCodeLine >= 4 && (
+                <div className="flex gap-3 pl-4">
+                  <span className="text-slate-600 select-none text-[10px]">05</span>
+                  <span>status: <span className="text-emerald-500">'building_the_future'</span>,</span>
+                </div>
+              )}
+              {activeCodeLine >= 5 && (
+                <div className="flex gap-3 pl-4">
+                  <span className="text-slate-600 select-none text-[10px]">06</span>
+                  <span>specialties: [<span className="text-amber-500">'React Native'</span>, <span className="text-amber-500">'AI'</span>]</span>
+                </div>
+              )}
+              {activeCodeLine >= 6 && (
+                <div className="flex gap-3">
+                  <span className="text-slate-600 select-none text-[10px]">07</span>
+                  <span>{'};'}</span>
+                </div>
+              )}
+              {activeCodeLine >= 7 && (
+                <div className="flex gap-3">
+                  <span className="text-slate-600 select-none text-[10px]">08</span>
+                  <span><span className="text-[#00E5FF]">export default</span> devProfile;</span>
+                </div>
+              )}
+              
+              {/* Blinking Cyber cursor */}
+              <div className="flex gap-3">
+                <span className="text-slate-600 select-none text-[10px]">{activeCodeLine >= 8 ? "09" : "08"}</span>
+                <span className="w-1.5 h-4 bg-[#00E5FF] animate-pulse" />
+              </div>
+            </div>
           </div>
+
+          {/* Floating UI telemetry cards around the terminal */}
+          <motion.div 
+            className="absolute -top-5 -right-5 glass-panel px-3 py-2 rounded border border-[#00E5FF]/20 text-[9px] font-mono z-20 shadow-lg"
+            animate={{ y: [0, -6, 0] }}
+            transition={{ duration: 4, repeat: Infinity, ease: "easeInOut" }}
+          >
+            <div className="text-[#00E5FF]">⚡ DEPLOY_RATE</div>
+            <div className="text-white font-bold font-display text-xs mt-0.5">100% SUCCESS</div>
+          </motion.div>
+          
+          <motion.div 
+            className="absolute -bottom-4 -left-4 glass-panel px-3 py-2 rounded border border-[#0066FF]/20 text-[9px] font-mono z-20 shadow-lg"
+            animate={{ y: [0, 6, 0] }}
+            transition={{ duration: 4, repeat: Infinity, ease: "easeInOut", delay: 1.5 }}
+          >
+            <div className="text-[#0066FF]">📡 AI_MODEL</div>
+            <div className="text-white font-bold font-display text-xs mt-0.5">INTEGRATED</div>
+          </motion.div>
         </motion.div>
       </div>
       
-      {/* Scroll indicator */}
+      {/* Scroll Down mouse indicator */}
       <motion.div 
         initial={{ opacity: 0 }}
-        animate={{ opacity: 1 }}
-        transition={{ delay: 1.5, duration: 0.6 }}
-        className="absolute bottom-10 left-1/2 -translate-x-1/2 flex flex-col items-center gap-2 z-10"
+        animate={{ opacity: 0.7 }}
+        transition={{ delay: 1.2, duration: 0.6 }}
+        className="absolute bottom-6 left-1/2 -translate-x-1/2 flex flex-col items-center gap-1.5 z-10 cursor-pointer"
+        onClick={() => {
+          document.querySelector('#about')?.scrollIntoView({ behavior: 'smooth' });
+        }}
       >
-        <span className="text-xs text-slate-500 font-mono tracking-widest">SWING DOWN</span>
-        <div className="w-[1px] h-12 bg-gradient-to-b from-[#E11D48] to-transparent relative overflow-hidden">
-          <div className="absolute top-0 left-0 w-full h-full bg-[#E11D48] animate-scroll" />
+        <span className="text-[9px] font-mono text-slate-500 tracking-widest uppercase">ENTER_HQ</span>
+        <div className="w-5 h-8 rounded-full border border-slate-700 flex justify-center p-1.5">
+          <div className="w-1 h-1.5 bg-[#00E5FF] rounded-full mouse-scroll-dot" />
         </div>
       </motion.div>
-
-      <style jsx>{`
-        @keyframes float {
-          0% {
-            transform: translateY(0) translateX(0);
-            opacity: 0;
-          }
-          50% {
-            opacity: 0.6;
-          }
-          100% {
-            transform: translateY(-200px) translateX(${Math.random() * 100 - 50}px);
-            opacity: 0;
-          }
-        }
-        
-        @keyframes scroll {
-          0% { transform: translateY(-100%); }
-          100% { transform: translateY(200%); }
-        }
-        
-        @keyframes blink {
-          0%, 100% { opacity: 1; }
-          50% { opacity: 0; }
-        }
-        
-        .animate-scroll {
-          animation: scroll 2s ease-in-out infinite;
-        }
-        
-        .animate-blink {
-          animation: blink 1s step-end infinite;
-        }
-      `}</style>
     </section>
   );
 };

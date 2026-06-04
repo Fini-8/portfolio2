@@ -1,33 +1,44 @@
-import React, { useEffect, useRef, useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import Lenis from '@studio-freight/lenis';
 import Navbar from './components/Navbar';
 import Hero from './components/Hero';
 import About from './components/About';
 import Skills from './components/Skills';
-import ProjectsWeb from './components/ProjectsWeb';
+import MobileShowcase from './components/MobileShowcase';
+import Projects from './components/Projects';
 import Experience from './components/Experience';
+import WhyWorkWithMe from './components/WhyWorkWithMe';
 import Contact from './components/Contact';
 import LoadingScreen from './components/LoadingScreen';
-import Cursor from './components/Cursor';
-import './index.css';
+
 import Footer from './components/Footer';
-import terminalassistant from './components/TerminalAssistant'
 import TerminalAssistant from './components/TerminalAssistant';
-import CombinedSection from './components/CombinedSection';
+import './index.css';
+
 function App() {
   const [isLoading, setIsLoading] = useState(true);
+  const [scrollProgress, setScrollProgress] = useState(0);
 
-  // Initialize Lenis for buttery smooth scrolling
+  // Monitor scroll progression for the top HUD bar
+  useEffect(() => {
+    const handleScroll = () => {
+      const totalScroll = document.documentElement.scrollHeight - window.innerHeight;
+      if (totalScroll > 0) {
+        setScrollProgress(window.scrollY / totalScroll);
+      }
+    };
+    window.addEventListener('scroll', handleScroll);
+    return () => window.removeEventListener('scroll', handleScroll);
+  }, []);
+
+  // Initialize Lenis for smooth momentum scrolling
   useEffect(() => {
     const lenis = new Lenis({
-      duration: 1.2,
-      easing: (t) => Math.min(1, 1.001 - Math.pow(2, -10 * t)), // makepill-like easing
+      duration: 0.8,
+      easing: (t) => Math.min(1, 1.001 - Math.pow(2, -10 * t)), 
       direction: 'vertical',
       gestureDirection: 'vertical',
       smooth: true,
-      mouseMultiplier: 1,
-      smoothTouch: false,
-      touchMultiplier: 2,
       infinite: false,
     });
 
@@ -38,7 +49,7 @@ function App() {
 
     requestAnimationFrame(raf);
 
-    // Make sure we stop scrolling while loading
+    // Disable scrolling when booting
     if (isLoading) {
       lenis.stop();
     } else {
@@ -51,8 +62,16 @@ function App() {
   }, [isLoading]);
 
   return (
-    <div className="bg-[#020617] text-slate-200 min-h-screen font-sans selection:bg-rose-600/30 selection:text-white hide-native-cursor">
-      <Cursor />
+    <div className="bg-[#050505] text-slate-300 min-h-screen font-sans selection:bg-[#00E5FF]/20 selection:text-[#00E5FF]">
+
+      
+      {/* Top scroll progress hud bar */}
+      {!isLoading && (
+        <div 
+          className="scroll-progress-bar"
+          style={{ transform: `scaleX(${scrollProgress})` }}
+        />
+      )}
       
       {isLoading ? (
         <LoadingScreen onComplete={() => setIsLoading(false)} />
@@ -60,12 +79,17 @@ function App() {
         <>
           <Navbar />
           <main className="relative z-10">
+            {/* Cinematic Storytelling headquarters flow */}
             <Hero />
-            <CombinedSection/>
-            <ProjectsWeb />
+            <About />
+            <Skills />
+            <MobileShowcase />
+            <Projects />
+            <Experience />
+            <WhyWorkWithMe />
             <Contact />
-            <Footer/>
-            <TerminalAssistant/>
+            <Footer />
+            <TerminalAssistant />
           </main>
         </>
       )}

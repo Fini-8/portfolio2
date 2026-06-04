@@ -1,201 +1,196 @@
 import React, { useRef } from 'react';
-import { motion, useScroll, useTransform } from 'framer-motion';
+import { motion } from 'framer-motion';
+import { FaGraduationCap, FaCode, FaRocket, FaUserAstronaut } from 'react-icons/fa';
 
 const About = () => {
   const containerRef = useRef(null);
-  const { scrollYProgress } = useScroll({
-    target: containerRef,
-    offset: ["start end", "end start"]
-  });
 
-  const y1 = useTransform(scrollYProgress, [0, 1], [100, -100]);
-  const y2 = useTransform(scrollYProgress, [0, 1], [150, -150]);
+  // Alternating entry variants: Section 1 slides in from LEFT
+  const sectionVariants = {
+    hidden: { 
+      opacity: 0, 
+      x: -150, 
+      filter: 'blur(10px)' 
+    },
+    visible: { 
+      opacity: 1, 
+      x: 0, 
+      filter: 'blur(0px)',
+      transition: { 
+        duration: 1.0, 
+        ease: [0.16, 1, 0.3, 1] 
+      }
+    }
+  };
 
-  // Memoized particles for better performance
-  const particles = React.useMemo(() => {
-    return [...Array(20)].map((_, i) => ({ id: i }));
-  }, []);
+  const missionLogs = [
+    {
+      category: "EDUCATION",
+      icon: FaGraduationCap,
+      title: "Computer Science Student",
+      time: "2024 - Present",
+      status: "COMPLETED_SEMESTER_ACTIVE",
+      details: "Pursuing a Bachelor of Engineering in Computer Science & Engineering. Deep dive into algorithms, data structures, and database engines."
+    },
+    {
+      category: "LEARNING_JOURNEY",
+      icon: FaRocket,
+      title: "Self-Driven Architectureups",
+      time: "2024 - Present",
+      status: "CONTINUOUS_COMPILING",
+      details: "Transitioned from static coding to advanced UI frameworks. Mastered state management, performance optimization, and AI integrations (OpenAI API)."
+    },
+    {
+      category: "DEVELOPMENT_EXPERIENCE",
+      icon: FaCode,
+      title: "Frontend Intern & Freelance Engineer",
+      time: "2024 - Present",
+      status: "4_COMPLETED_INTERNSHIPS",
+      details: "Delivered scalable mobile systems using Ionic, React Native, and Angular. Completed internships at Omnimate, iTecz Solutions, and E&N IIT Hyderabad."
+    },
+    {
+      category: "PERSONAL_GROWTH",
+      icon: FaUserAstronaut,
+      title: "Next-Gen Innovator",
+      time: "Active",
+      status: "UPGRADING_MATRIX",
+      details: "Applying AI technologies to everyday code problems, participating in hackathons (selected in Top 10 at Innovex for SAHAYA), building clean production architectures."
+    }
+  ];
 
   return (
-    <section id="about" ref={containerRef} className="py-32 relative overflow-hidden">
-      {/* Optimized Background */}
-      <div className="absolute inset-0 bg-gradient-to-b from-[#020617] via-[#0A0F2A] to-[#020617]">
-        {/* Static spider-web grid - fixed SVG syntax */}
-        <div className="absolute inset-0 opacity-10">
-          <div 
-            className="w-full h-full bg-repeat"
-            style={{
-              backgroundImage: `url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='80' height='80'%3E%3Cpath d='M40 0 L40 80 M0 40 L80 40' stroke='%23E11D48' stroke-width='0.5' fill='none' opacity='0.3'/%3E%3Cpath d='M0 0 L80 80 M80 0 L0 80' stroke='%232563EB' stroke-width='0.3' fill='none' opacity='0.2'/%3E%3Ccircle cx='40' cy='40' r='2' fill='%23E11D48' opacity='0.5'/%3E%3C/svg%3E")`
-            }}
-          />
-        </div>
-
-        {/* Simplified gradient orbs - no animations for better performance */}
-        <div className="absolute top-0 left-0 w-[400px] h-[400px] rounded-full bg-[#E11D48]/5 blur-[100px]" />
-        <div className="absolute bottom-0 right-0 w-[500px] h-[500px] rounded-full bg-[#2563EB]/5 blur-[120px]" />
-        <div className="absolute top-1/2 left-1/2 transform -translate-x-1/2 -translate-y-1/2 w-[300px] h-[300px] rounded-full bg-[#E11D48]/3 blur-[80px]" />
-
-        {/* Floating particles - static positions with CSS animations */}
-        {particles.map((_, i) => (
-          <div
-            key={`particle-${i}`}
-            className="absolute w-0.5 h-0.5 bg-gradient-to-r from-[#E11D48] to-[#2563EB] rounded-full"
-            style={{
-              left: `${Math.random() * 100}%`,
-              top: `${Math.random() * 100}%`,
-              animation: `floatAbout ${3 + Math.random() * 4}s linear infinite`,
-              animationDelay: `${Math.random() * 5}s`,
-              opacity: 0,
-            }}
-          />
-        ))}
-      </div>
+    <section 
+      id="about" 
+      ref={containerRef} 
+      className="py-32 relative bg-[#050505] overflow-hidden"
+    >
+      {/* Cyber Grid Background */}
+      <div className="absolute inset-0 hud-grid opacity-15" />
+      
+      {/* Subtle Electric Blue Ambient Light Spot (Left side glow) */}
+      <div className="absolute top-1/4 -left-48 w-96 h-96 bg-[#0066FF]/5 rounded-full blur-[100px] pointer-events-none" />
 
       <div className="max-w-7xl mx-auto px-6 md:px-12 relative z-10">
-        <motion.div 
-          initial={{ opacity: 0, y: 50 }}
-          whileInView={{ opacity: 1, y: 0 }}
-          viewport={{ once: true, margin: "-100px" }}
-          transition={{ duration: 0.6 }}
-          className="mb-16"
+        
+        {/* Scroll reveal container - sliding in from LEFT */}
+        <motion.div
+          variants={sectionVariants}
+          initial="hidden"
+          whileInView="visible"
+          viewport={{ once: true, margin: "-150px" }}
+          className="grid lg:grid-cols-12 gap-12 items-start"
         >
-          <div className="flex items-center gap-4 mb-4">
-            <span className="h-[2px] w-12 bg-gradient-to-r from-[#E11D48] to-[#2563EB]" />
-            <span className="text-[#E11D48] font-mono tracking-widest text-sm uppercase">Subject Profile</span>
-          </div>
-          <h2 className="text-4xl md:text-5xl font-display font-bold">
-            The <span className="text-gradient-blue">Identity.</span>
-          </h2>
-        </motion.div>
+          {/* Left Side: Identity Dashboard */}
+          <div className="lg:col-span-5 space-y-8 lg:sticky lg:top-28">
+            <div className="flex items-center gap-3">
+              <span className="h-[1.5px] w-8 bg-[#00E5FF] shadow-[0_0_8px_#00E5FF]" />
+              <span className="text-[#00E5FF] font-mono text-xs uppercase tracking-widest text-glow-cyan">SYS_SECTOR: 01 // ABOUT</span>
+            </div>
+            
+            <h2 className="text-4xl sm:text-5xl font-display font-bold text-white leading-tight">
+              The <span className="bg-gradient-to-r from-[#0066FF] to-[#00E5FF] bg-clip-text text-transparent">Identity.</span>
+            </h2>
 
-        <div className="grid md:grid-cols-2 gap-16 relative">
-          {/* Left Column: Text */}
-          <motion.div style={{ y: y1 }} className="space-y-8 z-10">
-            <div className="glass-panel-glow p-8 rounded-2xl relative overflow-hidden group">
-              {/* Subtle background spider-web accent */}
-              <div className="absolute -bottom-20 -right-20 opacity-5 group-hover:opacity-10 transition-opacity duration-500 pointer-events-none">
-                <svg width="200" height="200" viewBox="0 0 100 100" fill="none" xmlns="http://www.w3.org/2000/svg">
-                  <path d="M50 0V100M0 50H100M14.6447 14.6447L85.3553 85.3553M14.6447 85.3553L85.3553 14.6447" stroke="currentColor" strokeWidth="2"/>
-                  <circle cx="50" cy="50" r="25" stroke="currentColor" strokeWidth="2"/>
-                  <circle cx="50" cy="50" r="50" stroke="currentColor" strokeWidth="2"/>
-                </svg>
-              </div>
-
-              <p className="text-lg text-slate-300 leading-relaxed font-light mb-6">
-                I am a UI/UX Designer and Frontend Architect specializing in <strong className="text-white font-medium">cinematic storytelling</strong> and <strong className="text-white font-medium">performance-driven</strong> web applications. 
-              </p>
-              <p className="text-lg text-slate-300 leading-relaxed font-light mb-6">
-                My work exists at the intersection of dark luxury aesthetics and cutting-edge web technology, creating digital experiences that feel less like websites and more like interactive cinema.
-              </p>
+            {/* Profile Frame with Cyber Details */}
+            <div className="glass-panel rounded-xl p-6 border border-slate-900 relative overflow-hidden group">
+              {/* Scanline bar effect */}
+              <div className="absolute top-0 left-0 w-full h-[1px] bg-gradient-to-r from-[#0066FF] to-[#00E5FF] opacity-35 animate-[scanline_6s_linear_infinite]" />
               
-              <div className="flex items-center gap-4 pt-4 border-t border-slate-800">
-                <div className="w-10 h-10 rounded-full bg-[#E11D48]/10 flex items-center justify-center border border-[#E11D48]/30 text-[#E11D48]">
-                  <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2">
-                    <path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"/>
-                  </svg>
+              <div className="flex flex-col sm:flex-row items-center gap-6">
+                {/* Visual Avatar frame */}
+                <div className="relative w-24 h-24 shrink-0 rounded border border-[#00E5FF]/40 p-1 bg-[#111111] overflow-hidden">
+                  <div className="absolute inset-0 bg-[#0066FF]/5" />
+                  <img
+                    src="/logo.png"
+                    alt="Syed Firas"
+                    className="w-full h-full object-cover object-top filter grayscale contrast-125"
+                  />
+                  <div className="absolute bottom-0 left-0 right-0 bg-[#050505]/80 text-[8px] font-mono text-[#00E5FF] text-center py-0.5 border-t border-[#00E5FF]/20">
+                    SYS_ACTIVE
+                  </div>
                 </div>
-                <span className="font-mono text-sm text-[#60A5FA]">SECURITY CLEARANCE: LEVEL 9</span>
-              </div>
-            </div>
-          </motion.div>
 
-          {/* Right Column: Photo + Stats */}
-          <motion.div style={{ y: y2 }} className="flex flex-col gap-6 z-10">
-            {/* Photo Frame */}
-            <div className="relative mx-auto w-64 h-64 md:w-72 md:h-72">
-              {/* Spinning ring decorations - using CSS animations */}
-              <div className="absolute inset-0 rounded-full border border-[#E11D48]/30 animate-spin-slow" />
-              <div className="absolute inset-3 rounded-full border border-[#2563EB]/20 animate-spin-reverse-slow" />
-
-              {/* Glowing background behind photo */}
-              <div className="absolute inset-4 rounded-full bg-[#E11D48]/10 blur-2xl" />
-
-              {/* Photo */}
-              <div className="absolute inset-4 rounded-full overflow-hidden border-2 border-[#E11D48]/50 shadow-[0_0_30px_rgba(225,29,72,0.3)]">
-                <img
-                  src="/logo.png"
-                  alt="Syed Firas"
-                  className="w-full h-full object-cover object-top scale-110"
-                />
+                <div className="space-y-2 text-center sm:text-left">
+                  <h3 className="text-xl font-display font-bold text-white">Syed Firas</h3>
+                  <p className="text-xs font-mono text-[#0066FF] uppercase tracking-wider">Full Stack & Mobile Engineer</p>
+                  
+                  <div className="inline-flex items-center gap-2 px-2.5 py-0.5 rounded bg-[#050505] border border-slate-800 text-[9px] font-mono text-slate-400">
+                    <span className="w-1.5 h-1.5 rounded-full bg-[#00E5FF] animate-pulse" />
+                    SECURITY_CLEARANCE: LEVEL_9
+                  </div>
+                </div>
               </div>
 
-              {/* HUD corner accents */}
-              <div className="absolute top-0 left-1/2 -translate-x-1/2 -translate-y-2 px-3 py-0.5 bg-[#020617]/90 backdrop-blur-sm border border-[#E11D48]/50 text-[#E11D48] font-mono text-[10px] tracking-widest rounded whitespace-nowrap">
-                SYED FIRAS
-              </div>
-              <div className="absolute bottom-0 left-1/2 -translate-x-1/2 translate-y-2 px-3 py-0.5 bg-[#020617]/90 backdrop-blur-sm border border-[#60A5FA]/40 text-[#60A5FA] font-mono text-[10px] tracking-widest rounded whitespace-nowrap">
-                DEV — ACTIVE
-              </div>
-            </div>
-
-            {/* Stats Grid */}
-            <div className="grid grid-cols-2 gap-4 mt-4">
-              <div className="glass-panel p-5 rounded-2xl border-t border-[#60A5FA]/30 hover:border-[#E11D48]/50 transition-all duration-300 group hover:transform hover:-translate-y-1">
-                <div className="text-3xl font-display font-bold text-white mb-1 group-hover:text-[#E11D48] transition-colors">2+</div>
-                <div className="text-xs text-slate-400 font-mono">YEARS ACTIVE</div>
-              </div>
-
-              <div className="glass-panel p-5 rounded-2xl border-t border-[#60A5FA]/30 hover:border-[#E11D48]/50 transition-all duration-300 group translate-y-4 hover:transform hover:-translate-y-1">
-                <div className="text-3xl font-display font-bold text-white mb-1 group-hover:text-[#E11D48] transition-colors">20+</div>
-                <div className="text-xs text-slate-400 font-mono">MISSIONS</div>
-              </div>
-
-              <div className="glass-panel p-5 rounded-2xl border-t border-[#60A5FA]/30 hover:border-[#E11D48]/50 transition-all duration-300 group hover:transform hover:-translate-y-1">
-                <div className="text-3xl font-display font-bold text-white mb-1 group-hover:text-[#E11D48] transition-colors">100%</div>
-                <div className="text-xs text-slate-400 font-mono">SUCCESS RATE</div>
-              </div>
-
-              <div className="glass-panel p-5 rounded-2xl border-t border-[#60A5FA]/30 hover:border-[#E11D48]/50 transition-all duration-300 group translate-y-4 hover:transform hover:-translate-y-1">
-                <div className="text-3xl font-display font-bold text-white mb-1 group-hover:text-[#E11D48] transition-colors">4</div>
-                <div className="text-xs text-slate-400 font-mono">INTERNSHIPS</div>
-              </div>
-            </div>
-
-            {/* Spider quote */}
-            <div className="glass-panel p-4 rounded-xl text-center mt-2">
-              <p className="text-xs font-mono text-slate-400 italic">
-                "With great power comes great responsibility." 
-                <span className="block text-[#E11D48] text-[10px] mt-1">— Uncle Ben</span>
+              <p className="text-sm text-slate-400 mt-6 leading-relaxed font-light font-geist">
+                A software engineering student with 4 internships and multiple web & mobile products launched. I specialize in crafting secure code architectures, integrating advanced language models, and shaping pixel-perfect luxury product interfaces.
               </p>
-            </div>
-          </motion.div>
-        </div>
-      </div>
 
-      {/* Add CSS animations */}
-      <style jsx>{`
-        @keyframes floatAbout {
-          0% {
-            transform: translateY(0) translateX(0);
-            opacity: 0;
-          }
-          50% {
-            opacity: 1;
-          }
-          100% {
-            transform: translateY(-150px) translateX(${Math.random() * 80 - 40}px);
-            opacity: 0;
-          }
-        }
-        
-        @keyframes spin-slow {
-          from { transform: rotate(0deg); }
-          to { transform: rotate(360deg); }
-        }
-        
-        @keyframes spin-reverse-slow {
-          from { transform: rotate(360deg); }
-          to { transform: rotate(0deg); }
-        }
-        
-        .animate-spin-slow {
-          animation: spin-slow 12s linear infinite;
-        }
-        
-        .animate-spin-reverse-slow {
-          animation: spin-reverse-slow 18s linear infinite;
-        }
-      `}</style>
+              {/* HQ Status telemetry indicators */}
+              <div className="grid grid-cols-2 gap-4 mt-6 pt-6 border-t border-slate-900 font-mono text-[10px] text-slate-500">
+                <div>
+                  <span className="text-[#00E5FF]">COGNITIVE:</span> FULL_STACK
+                </div>
+                <div>
+                  <span className="text-[#00E5FF]">LATENCY:</span> STABLE
+                </div>
+                <div>
+                  <span className="text-[#00E5FF]">SECTOR:</span> BLR_INDIA
+                </div>
+                <div>
+                  <span className="text-[#00E5FF]">PLATFORM:</span> CRSS_DEVICES
+                </div>
+              </div>
+            </div>
+          </div>
+
+          {/* Right Side: Mission Timeline */}
+          <div className="lg:col-span-7 space-y-6">
+            <h3 className="text-[10px] font-mono text-slate-500 uppercase tracking-widest mb-4">UPLINK_MISSION_TIMELINE:</h3>
+            
+            <div className="space-y-6 relative before:absolute before:left-6 before:top-4 before:bottom-4 before:w-[1px] before:bg-slate-900">
+              {missionLogs.map((log, index) => {
+                const IconComponent = log.icon;
+                return (
+                  <motion.div 
+                    key={log.category}
+                    className="relative pl-14 group"
+                    whileHover={{ x: 4 }}
+                    transition={{ type: "spring", stiffness: 400, damping: 25 }}
+                  >
+                    {/* Glowing timeline dot connector */}
+                    <div className="absolute left-3.5 top-0.5 -translate-x-1/2 w-6 h-6 rounded-full border border-slate-800 bg-[#050505] flex items-center justify-center text-slate-500 group-hover:border-[#00E5FF] group-hover:text-[#00E5FF] group-hover:shadow-[0_0_10px_rgba(0,229,255,0.4)] transition-all duration-300 z-10">
+                      <IconComponent size={10} />
+                    </div>
+
+                    {/* Mission card content */}
+                    <div className="glass-panel p-5 rounded-lg border border-slate-900 group-hover:border-[#0066FF]/30 transition-all duration-300">
+                      <div className="flex flex-wrap items-center justify-between gap-2 mb-3">
+                        <span className="text-[9px] font-mono text-[#00E5FF] tracking-wider bg-[#0066FF]/5 border border-[#0066FF]/10 px-2 py-0.5 rounded">
+                          {log.category}
+                        </span>
+                        <span className="text-[10px] font-mono text-slate-500">{log.time}</span>
+                      </div>
+                      
+                      <h4 className="text-lg font-display font-bold text-white mb-2 group-hover:text-[#00E5FF] transition-colors">
+                        {log.title}
+                      </h4>
+                      
+                      <p className="text-xs text-slate-400 leading-relaxed font-geist font-light mb-3">
+                        {log.details}
+                      </p>
+
+                      <div className="flex items-center gap-1.5 text-[8px] font-mono text-slate-500">
+                        <span className="inline-block w-1.5 h-1.5 rounded-full bg-[#00E5FF]/60" />
+                        <span>STATUS: {log.status}</span>
+                      </div>
+                    </div>
+                  </motion.div>
+                );
+              })}
+            </div>
+          </div>
+        </motion.div>
+      </div>
     </section>
   );
 };
